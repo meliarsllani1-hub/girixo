@@ -18,10 +18,31 @@
 body{background:#fff;margin:0;font-family:'Montserrat',sans-serif;color:#000;}
 .steps-box{color:#000;padding:20px;font-size:17px;text-align:center;line-height:1.6;max-width:500px;margin:20px auto;box-sizing:border-box;}
 .steps-box p{margin:16px 0;}
-.shein-btn{background:#ff66b2;color:#fff;padding:16px 22px;font-size:15px;border:2px solid #fff;cursor:pointer;display:flex;align-items:center;justify-content:flex-start;border-radius:50px;font-family:'Montserrat',sans-serif;width:calc(100% - 28px);max-width:500px;margin:10px auto 18px auto;box-sizing:border-box;transition:transform .2s;animation:sheinPulse 2.2s infinite;text-decoration:none;}
+.shein-btn{
+  background:#ff66b2;
+  color:#fff;
+  padding:20px 24px; /* taller + more horizontal space */
+  font-size:16px;
+  border:4px solid #fff; /* thick white border for stronger "button" feel */
+  border-radius:50px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  font-family:'Montserrat',sans-serif;
+  width:calc(100% - 28px);
+  max-width:500px;
+  margin:12px auto 20px auto;
+  box-sizing:border-box;
+  transition:transform .2s, box-shadow .2s;
+  animation:sheinPulse 2.2s infinite;
+  text-decoration:none;
+  box-shadow:0 8px 30px rgba(255,102,178,.4); /* extra shadow for depth */
+}
 .shein-btn:hover{transform:scale(1.03);}
-@keyframes sheinPulse{0%{box-shadow:0 0 0 0 rgba(255,102,178,.35);}70%{box-shadow:0 0 0 12px rgba(255,102,178,0);}100%{box-shadow:0 0 0 0 rgba(255,102,178,0);}}
-.text-container span:first-child{font-size:18px;font-weight:600;}
+.shein-btn:active{transform:scale(.98);}
+@keyframes sheinPulse{0%{box-shadow:0 8px 30px rgba(255,102,178,.4);}50%{box-shadow:0 12px 40px rgba(255,102,178,.5);}100%{box-shadow:0 8px 30px rgba(255,102,178,.4);}}
+.text-container span:first-child{font-size:19px;font-weight:600;} /* main text +1px larger */
 .subtext{font-size:11px;margin-top:4px;opacity:.9;}
 .eligible-box{background:#fff;max-width:480px;margin:12px auto 0;padding:12px 16px;font-size:13.5px;text-align:center;color:#333;border-radius:14px;border:1px solid #eee;box-shadow:0 1px 6px rgba(0,0,0,.04);font-weight:500;min-height:42px;display:flex;align-items:center;justify-content:center;}
 .trust-text{text-align:center;font-size:12px;color:#888;margin-top:12px;margin-bottom:0;font-weight:500;max-width:480px;margin-left:auto;margin-right:auto;}
