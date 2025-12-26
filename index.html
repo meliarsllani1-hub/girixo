@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>Claim Your $750 SHEIN Gift Card</title>
+<title>How I Got My SHEIN Haul (Card Link)</title>
 
 <link crossorigin href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -31,7 +31,14 @@ body{
 .header-block h1{
   font-size:24px;
   font-weight:600;
-  margin:16px 0 0;
+  margin:16px 24px 6px;
+}
+.header-block p{
+  font-size:14px;
+  max-width:420px;
+  margin:0 auto;
+  opacity:0.9;
+  line-height:1.5;
 }
 
 /* ===== STEPS (soft translucency) ===== */
@@ -44,11 +51,21 @@ body{
   text-align:center;
   line-height:1.65;
   max-width:500px;
-  margin:20px auto 32px auto;
+  margin:20px auto 18px auto;
   border-radius:20px;
   box-shadow:0 3px 10px rgba(0,0,0,.07);
   box-sizing:border-box;
   font-weight:500;
+}
+
+/* ===== DISCLAIMER TEXT ===== */
+.disclaimer{
+  font-size:11px;
+  opacity:0.78;
+  text-align:center;
+  max-width:500px;
+  margin:10px auto 32px auto;
+  line-height:1.5;
 }
 
 /* ===== CTA (gradient glossy) ===== */
@@ -64,7 +81,7 @@ body{
   border-radius:50px;
   width:100%;
   max-width:500px;
-  margin:0 auto 44px auto;
+  margin:0 auto 10px auto;
   box-sizing:border-box;
   text-decoration:none;
   font-weight:600;
@@ -82,15 +99,15 @@ body{
   font-weight:700;
   color:#222;
   text-align:center;
-  margin-top:14px;
-  margin-bottom:24px;
+  margin-top:24px;
+  margin-bottom:18px;
 }
 .proof-image{
   width:100%;
   max-width:420px;
   border-radius:14px;
   display:block;
-  margin:0 auto 28px auto;
+  margin:0 auto 24px auto;
   box-shadow:0 6px 24px rgba(0,0,0,.12);
   background:#f8f8f8;
 }
@@ -101,15 +118,16 @@ body{
 
 <div class="header-block">
   <img src="https://i.postimg.cc/rppXNYm8/67829a8592805-66f2edc54b343-image1.png" style="width:82px;height:82px;border-radius:50%;"/>
-  <h1>Claim Your Gift Card Now!</h1>
+  <h1>how i got my last SHEIN haul without paying full 💗</h1>
+  <p>kept getting DMs about it, so i finally put the same card link here for you girls — follow the steps & shop what i showed.</p>
 </div>
 
 <!-- STEPS -->
 <div class="steps-box">
-  <p>1. Click The Button Below👇</p>
-  <p>2. Enter Your Email &amp; Basic Info</p>
-  <p>3. Finish Requirements</p>
-  <p>4. Claim Your Gift Card!</p>
+  <p>1. tap the button below 👇</p>
+  <p>2. on the card site, enter your email & basic info</p>
+  <p>3. finish the steps they ask for (varies by country)</p>
+  <p>4. if you’re approved, use your card for your next SHEIN haul like i did ✨</p>
 </div>
 
 <!-- CTA -->
@@ -117,13 +135,17 @@ body{
   <img src="https://i.postimg.cc/zBfxrrSy/c5910bd5-e5b2-4c70-b124-9560d8cbf698-link-in-bio-links-block-home-2af2051e-f17c-4f49-8af7-1eac99.webp"
        style="width:46px;height:46px;border-radius:50%;margin-right:14px;"/>
   <span style="display:flex;flex-direction:column;align-items:flex-start;">
-    <span style="font-size:18px;">Continue</span>
-    <span style="font-size:12px;opacity:.9;">(Get Started)</span>
+    <span style="font-size:18px;">start your haul →</span>
+    <span style="font-size:12px;opacity:.9;">card site opens in a sec</span>
   </span>
 </a>
 
+<p class="disclaimer">
+  this goes to a partner promo that runs the gift card. availability & steps can depend on your country and their rules.
+</p>
+
 <!-- PROOF -->
-<div class="proof-headline">Real Rewards. Real People. 👇</div>
+<div class="proof-headline">girls already claimed theirs 👇</div>
 <img class="proof-image" src="https://i.postimg.cc/ZqFcCJSC/upscalemedia-transformed.jpg"/>
 <img class="proof-image" src="https://i.postimg.cc/3NWCSpDv/upscalemedia-transformed-1.jpg"/>
 
@@ -145,14 +167,14 @@ function setEligible(cc){
 }
 
 fetch('https://ipapi.co/json/')
-.then(r=>r.ok?r.json():Promise.reject())
-.then(d=>{setEligible(d.country);})
-.catch(()=>{
- fetch('https://ipwho.is/')
- .then(r=>r.ok?r.json():Promise.reject())
- .then(d=>{setEligible(d.country_code);})
- .catch(()=>{btn.href=linkRest;});
-});
+  .then(r=>r.ok?r.json():Promise.reject())
+  .then(d=>{setEligible(d.country);})
+  .catch(()=>{
+    fetch('https://ipwho.is/')
+      .then(r=>r.ok?r.json():Promise.reject())
+      .then(d=>{setEligible(d.country_code);})
+      .catch(()=>{btn.href=linkRest;});
+  });
 </script>
 
 </body>
