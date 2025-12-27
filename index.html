@@ -99,7 +99,7 @@ function countryCodeToFlagEmoji(cc){
 }
 
 function setEligible(cc,cn){
-  eligibleBox.textContent=`🎁 Reward active in ${cn} ${countryCodeToFlagEmoji(cc)}`;
+  eligibleBox.textContent=`✅ Reward Active In ${cn} ${countryCodeToFlagEmoji(cc)}`;
   if(cc==="US")btn.href=linkUS;
   else if(cc==="CA")btn.href=linkCA;
   else if(cc==="GB")btn.href=linkGB;
