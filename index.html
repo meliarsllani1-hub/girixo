@@ -35,7 +35,7 @@ body{background:#fff;margin:0;font-family:'Montserrat',sans-serif;color:#000;}
 <div class="steps-box">
 <p>1. Click The Link Below👇</p>
 <p>2. Enter Your Email &amp; Basic Info</p>
-<p>3. Complete Deals<br><span style="font-size:12px;color:#6D6D6D">(Higher value deals = faster rewards!)</span></p>
+<p>3. Complete Recommended Deals<br><span style="font-size:12px;color:#6D6D6D">(Higher value deals = faster rewards!)</span></p>
 <p>4. Claim Your Gift Card!</p>
 </div>
 
@@ -47,7 +47,7 @@ body{background:#fff;margin:0;font-family:'Montserrat',sans-serif;color:#000;}
   </div>
 </a>
 
-<div class="eligible-box" id="eligible-box">🌍 Checking eligibility...</div>
+<div class="eligible-box" id="eligible-box">🎁 Reward active in your area</div>
 <p class="trust-text">🔒 256-bit Encryption – Powered by Trusted Partners</p>
 
 <div class="proof-headline">Real Rewards. Real People. 👇</div>
@@ -73,7 +73,7 @@ const linkRest="https://rewardorbit.com/r/eyJ0Ijoic2hlaW4iLCJ1IjoiNjdkNTliZmEzNj
 // default instantly
 btn.href=linkRest;
 
-// async eligibility (non-blocking)
+// async geolocation (non-blocking)
 (async()=>{
   try{
     let r=await fetch("https://ipapi.co/json/");
@@ -90,8 +90,6 @@ btn.href=linkRest;
       if(d.country_code&&d.country){setEligible(d.country_code,d.country);return;}
     }
   }catch(e){}
-
-  eligibleBox.textContent="🌍 Eligible Worldwide";
 })();
 
 // flag + routing
@@ -101,7 +99,7 @@ function countryCodeToFlagEmoji(cc){
 }
 
 function setEligible(cc,cn){
-  eligibleBox.textContent=`✅ Eligible – ${cn} ${countryCodeToFlagEmoji(cc)}`;
+  eligibleBox.textContent=`🎁 Reward active in ${cn} ${countryCodeToFlagEmoji(cc)}`;
   if(cc==="US")btn.href=linkUS;
   else if(cc==="CA")btn.href=linkCA;
   else if(cc==="GB")btn.href=linkGB;
@@ -109,7 +107,7 @@ function setEligible(cc,cn){
   else btn.href=linkRest;
 }
 
-// Umami tracking with tiny delay to fire before redirect
+// Umami tracking with delay to fire before redirect
 btn.addEventListener('click',(e)=>{
   e.preventDefault();
   const url=btn.href;
