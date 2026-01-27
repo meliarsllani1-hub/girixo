@@ -60,11 +60,11 @@
     margin:0 0 8px;font-weight:900;letter-spacing:-.3px;
   }
   .sub{
-    font-size:13px;color:var(--muted);
-    margin:0 0 2px;line-height:1.45;font-weight:900;
+    font-size:14px;color:var(--muted);
+    margin:0 0 2px;line-height:1.45;font-weight:850;
   }
 
-  /* Single CTA */
+  /* Single CTA (iOS-like, super tappable) */
   .shein-btn{
     background:linear-gradient(135deg,var(--pink),var(--pink2));
     color:#fff;
@@ -108,22 +108,8 @@
     margin-left:12px;
     min-width:0;
   }
-  .btn-title{
-    font-size:15px;
-    font-weight:900;
-    line-height:1.15;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    max-width:100%;
-  }
-  .btn-sub{
-    font-size:12px;
-    opacity:.96;
-    margin-top:4px;
-    font-weight:900;
-    line-height:1.2;
-  }
+  .btn-title{font-size:16px;font-weight:900;line-height:1.15;}
+  .btn-sub{font-size:12px;opacity:.96;margin-top:3px;font-weight:900;}
 
   .btn-arrow{
     width:34px;height:34px;border-radius:999px;
@@ -139,16 +125,7 @@
     text-align:center;
     font-size:12px;
     color:#7a7a7a;
-    margin:8px 0 8px;
-    font-weight:900;
-  }
-
-  /* tiny “proof-lite” line (CTR-friendly) */
-  .social-proof{
-    text-align:center;
-    font-size:12px;
-    color:#8a8a8a;
-    margin:0 0 10px;
+    margin:8px 0 10px;
     font-weight:900;
   }
 
@@ -173,6 +150,7 @@
     margin:12px 0 10px;
   }
 
+  /* Steps (visible, short, friendly) */
   .how-box{
     margin:12px 0 6px;
     border:1px solid rgba(238,238,238,.95);
@@ -213,14 +191,8 @@
     flex:0 0 auto;
   }
   .step-text{flex:1;}
-  .step-note{
-    display:block;
-    margin-top:3px;
-    font-size:12px;
-    color:#6f6f6f;
-    font-weight:900;
-  }
 
+  /* EPC helper line (soft commitment, low CTR impact) */
   .tip{
     margin:10px 0 0;
     font-size:12px;
@@ -239,32 +211,32 @@
         <img class="avatar" src="https://i.postimg.cc/rppXNYm8/67829a8592805-66f2edc54b343-image1.png" alt=""/>
         <p class="kicker">if you’re wondering too…</p>
         <h1 class="headline">this is the SHEIN gift card 💖</h1>
-        <p class="sub">Higher value deals = faster rewards!</p>
+        <p class="sub">Tap below to continue.</p>
       </div>
     </div>
 
-    <!-- SINGLE CTA ONLY (CTR rescue: softened subtitle, still truthful via steps) -->
-    <a href="#" class="shein-btn cta-link" id="shein-btn" aria-label="$750 SHEIN Gift Card" rel="nofollow noopener">
+    <!-- SINGLE CTA ONLY -->
+    <a href="#" class="shein-btn cta-link" id="shein-btn" aria-label="SHEIN Gift Card">
       <img class="btn-icon" src="https://i.postimg.cc/zBfxrrSy/c5910bd5-e5b2-4c70-b124-9560d8cbf698-link-in-bio-links-block-home-2af2051e-f17c-4f49-8af7-1eac99.webp" alt=""/>
       <div class="btn-text">
-        <span class="btn-title">$750 SHEIN Gift Card</span>
-        <span class="btn-sub">Tap to continue →</span>
+        <span class="btn-title">Reveal my reward</span>
+        <span class="btn-sub">Continue →</span>
       </div>
       <div class="btn-arrow" aria-hidden="true">›</div>
     </a>
 
     <p class="micro">works on mobile • official partners</p>
-    <p class="social-proof">popular on IG right now • updated daily</p>
 
-    <!-- Default: neutral-positive (doesn't kill CTR, doesn't overpromise) -->
-    <div class="eligible-box" id="eligible-box">✅ Reward available — checking your country…</div>
+    <!-- Positive instantly; geo will refine -->
+    <div class="eligible-box" id="eligible-box">✅ Reward available in your country 🌍</div>
 
     <div class="divider"></div>
 
+    <!-- Steps (visible, not collapsed) -->
     <div class="how-box" id="how">
       <div class="how-head">
         <span>How it works</span>
-        <span class="tap-pill">4 steps</span>
+        <span class="tap-pill">3 steps</span>
       </div>
 
       <div class="steps">
@@ -272,23 +244,13 @@
           <div class="step-num">1</div>
           <div class="step-text">Tap the pink button above 👆</div>
         </div>
-
         <div class="step-row">
           <div class="step-num">2</div>
-          <div class="step-text">Enter Your Email &amp; Basic Info</div>
+          <div class="step-text">Enter your email to continue</div>
         </div>
-
         <div class="step-row">
           <div class="step-num">3</div>
-          <div class="step-text">
-            Complete Recommended Steps
-            <span class="step-note">(Some steps include partner deals — higher value = faster rewards!)</span>
-          </div>
-        </div>
-
-        <div class="step-row">
-          <div class="step-num">4</div>
-          <div class="step-text">Claim Your Gift Card ✅</div>
+          <div class="step-text">Follow the steps shown to claim ✅</div>
         </div>
       </div>
 
@@ -305,10 +267,10 @@
     const buttons = document.querySelectorAll('.cta-link');
 
     // redirect links (UNCHANGED)
-    const linkUS="https://glctrk.org/aff_c?offer_id=3091&aff_id=15802";
-    const linkCA="https://glctrk.org/aff_c?offer_id=3105&aff_id=15802";
-    const linkGB="https://glctrk.org/aff_c?offer_id=3105&aff_id=15802";
-    const linkAU="https://glctrk.org/aff_c?offer_id=3105&aff_id=15802";
+const linkUS="https://glctrk.org/aff_c?offer_id=3091&aff_id=15802";  
+const linkCA="https://glctrk.org/aff_c?offer_id=3105&aff_id=15802";
+const linkGB="https://glctrk.org/aff_c?offer_id=3105&aff_id=15802"; 
+const linkAU="https://glctrk.org/aff_c?offer_id=3105&aff_id=15802";  
     const linkRest="https://rewardorbit.com/r/eyJ0Ijoic2hlaW4iLCJ1IjoiNjdkNTliZmEzNjlmZTUyYjM5YTAwOTdmIiwiYSI6Ijc1MCIsInRzIjoxNzY1MjMyNDg5MjAyfQ?amount=750";
 
     // default instantly for ALL buttons
@@ -333,22 +295,30 @@
 
     (async()=>{
       try{
+        // 1) ipapi
         const {cc, cn} = await tryProvider("https://ipapi.co/json/", d => ({ cc: d.country, cn: d.country_name }));
-        setEligible(cc, cn); return;
+        setEligible(cc, cn);
+        return;
       }catch(e){}
 
       try{
+        // 2) ipwho
         const {cc, cn} = await tryProvider("https://ipwho.is/", d => ({ cc: d.country_code, cn: d.country }));
-        setEligible(cc, cn); return;
+        setEligible(cc, cn);
+        return;
       }catch(e){}
 
       try{
+        // 3) ipinfo (extra backup for high-traffic spikes)
         const {cc, cn} = await tryProvider("https://ipinfo.io/json", d => ({ cc: d.country, cn: d.country }));
-        setEligible(cc, cn); return;
+        setEligible(cc, cn);
+        return;
       }catch(e){}
 
+      // Final fallback: don't leave "Checking..."
       eligibleBox.textContent = "✅ Reward available 🌍";
     })();
+    // ----------------------------------------------------------------------------------------
 
     function countryCodeToFlagEmoji(cc){
       if(!cc || cc.length!==2) return "";
@@ -369,7 +339,7 @@
       buttons.forEach(b => b.href = target);
     }
 
-    // Umami tracking with delay to fire before redirect
+    // Umami tracking with delay to fire before redirect (UNCHANGED EVENT NAME)
     buttons.forEach((btn)=>{
       btn.addEventListener('click',(e)=>{
         e.preventDefault();
@@ -378,21 +348,6 @@
         setTimeout(()=>{window.location.href=url;},160);
       });
     });
-
-    // OPTIONAL: track if people actually saw the steps (helps you diagnose EPC)
-    let stepsTracked = false;
-    const stepsEl = document.getElementById("how");
-    if (stepsEl) {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !stepsTracked) {
-            stepsTracked = true;
-            if (window.umami) umami.track("Viewed Steps");
-          }
-        });
-      }, { threshold: 0.4 });
-      observer.observe(stepsEl);
-    }
   </script>
 </body>
 </html>
