@@ -282,79 +282,78 @@
     </div>
   </div>
 
-  <!-- UMAMI -->
-  <script defer src="https://cloud.umami.is/script.js" data-website-id="8ca5b018-f00b-4957-8139-ce0333d8cbfce2"></script>
+ <!-- UMAMI (correct website id) -->
+<script
+  defer
+  src="https://cloud.umami.is/script.js"
+  data-website-id="8ca5b018-f00b-4957-8139-ce0333d8fce2">
+</script>
 
-  <script>
-    const buttons = document.querySelectorAll('.cta-link');
+<script>
+  const buttons = document.querySelectorAll('.cta-link');
 
-    // redirect links (UNCHANGED)
-    const linkUS="https://glctrk.org/aff_c?offer_id=1146&aff_id=15802";
-    const linkCA="https://glctrk.org/aff_c?offer_id=1224&aff_id=15802";
-    const linkGB="https://glctrk.org/aff_c?offer_id=1224&aff_id=15802";
-    const linkAU="https://glctrk.org/aff_c?offer_id=1224&aff_id=15802";
-    const linkRest="https://rewardorbit.com/r/eyJ0Ijoic2hlaW4iLCJ1IjoiNjdkNTliZmEzNjlmZTUyYjM5YTAwOTdmIiwiYSI6Ijc1MCIsInRzIjoxNzY1MjMyNDg5MjAyfQ?amount=750";
+  const linkUS="https://glctrk.org/aff_c?offer_id=1146&aff_id=15802";
+  const linkCA="https://glctrk.org/aff_c?offer_id=1224&aff_id=15802";
+  const linkGB="https://glctrk.org/aff_c?offer_id=1224&aff_id=15802";
+  const linkAU="https://glctrk.org/aff_c?offer_id=1224&aff_id=15802";
+  const linkRest="https://rewardorbit.com/r/eyJ0Ijoic2hlaW4iLCJ1IjoiNjdkNTliZmEzNjlmZTUyYjM5YTAwOTdmIiwiYSI6Ijc1MCIsInRzIjoxNzY1MjMyNDg5MjAyfQ?amount=750";
 
-    // default instantly for ALL buttons
-    buttons.forEach(b => b.href = linkRest);
+  // default instantly
+  buttons.forEach(b => b.href = linkRest);
 
-    // ---- GEO FIX (high-traffic safe): timeout + cache-bust + 3 providers + final fallback ----
-    const withTimeout = (p, ms=1200) =>
-      Promise.race([p, new Promise((_,rej)=>setTimeout(()=>rej(new Error("timeout")), ms))]);
+  const withTimeout = (p, ms=1200) =>
+    Promise.race([p, new Promise((_,rej)=>setTimeout(()=>rej(new Error("timeout")), ms))]);
 
-    const tryProvider = async (url, mapFn) => {
-      const sep = url.includes("?") ? "&" : "?";
-      const r = await withTimeout(fetch(url + sep + "_=" + Date.now(), {
-        cache: "no-store",
-        credentials: "omit"
-      }), 1200);
-      if(!r.ok) throw new Error("bad_status_" + r.status);
-      const d = await r.json();
-      const out = mapFn(d);
-      if(!out || !out.cc) throw new Error("bad_payload");
-      return out;
-    };
+  const tryProvider = async (url, mapFn) => {
+    const sep = url.includes("?") ? "&" : "?";
+    const r = await withTimeout(fetch(url + sep + "_=" + Date.now(), {
+      cache: "no-store",
+      credentials: "omit"
+    }), 1200);
+    if(!r.ok) throw new Error("bad_status_" + r.status);
+    const d = await r.json();
+    const out = mapFn(d);
+    if(!out || !out.cc) throw new Error("bad_payload");
+    return out;
+  };
 
-    (async()=>{
-      let cc = null;
+  (async()=>{
+    let cc = null;
 
-      try{
-        const out = await tryProvider("https://ipapi.co/json/", d => ({ cc: d.country }));
-        cc = out.cc;
-      }catch(e){}
+    try{ cc = (await tryProvider("https://ipapi.co/json/", d => ({cc:d.country}))).cc; }catch(e){}
+    if(!cc){ try{ cc = (await tryProvider("https://ipwho.is/", d => ({cc:d.country_code}))).cc; }catch(e){} }
+    if(!cc){ try{ cc = (await tryProvider("https://ipinfo.io/json", d => ({cc:d.country}))).cc; }catch(e){} }
 
-      if(!cc){
-        try{
-          const out = await tryProvider("https://ipwho.is/", d => ({ cc: d.country_code }));
-          cc = out.cc;
-        }catch(e){}
-      }
+    let target = linkRest;
+    if(cc==="US") target = linkUS;
+    else if(cc==="CA") target = linkCA;
+    else if(cc==="GB") target = linkGB;
+    else if(cc==="AU") target = linkAU;
 
-      if(!cc){
-        try{
-          const out = await tryProvider("https://ipinfo.io/json", d => ({ cc: d.country }));
-          cc = out.cc;
-        }catch(e){}
-      }
+    buttons.forEach(b => b.href = target);
+  })();
 
-      let target = linkRest;
-      if(cc==="US") target = linkUS;
-      else if(cc==="CA") target = linkCA;
-      else if(cc==="GB") target = linkGB;
-      else if(cc==="AU") target = linkAU;
-
-      buttons.forEach(b => b.href = target);
+  // Wait for umami to exist (max 900ms) before redirect
+  const waitForUmami = (ms=900) => new Promise((resolve)=>{
+    const start = Date.now();
+    (function tick(){
+      if (window.umami && typeof window.umami.track === "function") return resolve(true);
+      if (Date.now() - start > ms) return resolve(false);
+      setTimeout(tick, 50);
     })();
+  });
 
-    // Umami tracking with delay to fire before redirect (UNCHANGED EVENT NAME)
-    buttons.forEach((btn)=>{
-      btn.addEventListener('click',(e)=>{
-        e.preventDefault();
-        const url = btn.href;
-        if(window.umami) umami.track("SHEIN Offer Click");
-        setTimeout(()=>{window.location.href=url;},160);
-      });
+  buttons.forEach((btn)=>{
+    btn.addEventListener('click', async (e)=>{
+      e.preventDefault();
+      const url = btn.href;
+
+      const ready = await waitForUmami(900);
+      if (ready) window.umami.track("SHEIN Offer Click");
+
+      setTimeout(()=>{ window.location.href = url; }, 160);
     });
-  </script>
+  });
+</script>
 </body>
 </html>
