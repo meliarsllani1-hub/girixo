@@ -1,359 +1,353 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Complete Your Registration</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SHEIN Gift Card</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
 
-  <style>
-    :root{
-      --pink:#ff4fa6;
-      --pink2:#ff7ec6;
-      --text:#111;
-      --muted:#6d6d6d;
-      --card:#ffffff;
-      --line:#e9e9ee;
-      --page:#f6f6f8;
-      --shadowSoft:0 10px 24px rgba(0,0,0,.06);
-      --shadow:0 12px 30px rgba(0,0,0,.08);
-      --radius:22px;
-    }
+<style>
+  :root{
+    --pink:#ff4fa6;
+    --pink2:#ff7ec6;
+    --text:#111;
+    --muted:#6d6d6d;
+    --card:#ffffff;
+    --line:#eeeeee;
+    --shadow:0 10px 28px rgba(0,0,0,.10);
+    --shadowSoft:0 10px 24px rgba(0,0,0,.06);
+  }
 
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      background:var(--page);
-      color:var(--text);
-      font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Helvetica Neue",Arial,'Montserrat',sans-serif;
-    }
+  *{box-sizing:border-box;}
+  body{
+    background:#f6f6f8;
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",Arial,'Montserrat',sans-serif;
+    color:var(--text);
+  }
 
-    .wrap{
-      max-width:520px;
-      margin:0 auto;
-      padding:16px 14px 34px;
-    }
+  .wrap{
+    max-width:520px;
+    margin:0 auto;
+    padding:16px 14px 34px;
+    position:relative;
+  }
 
-    /* ONE continuous container */
-    .card{
-      background:rgba(255,255,255,.98);
-      border:1px solid rgba(0,0,0,.06);
-      border-radius:var(--radius);
-      box-shadow:var(--shadowSoft);
-      padding:16px 14px;
-    }
+  .top-card{
+    background:rgba(255,255,255,.96);
+    border:1px solid rgba(0,0,0,.06);
+    border-radius:22px;
+    padding:12px 12px 10px;
+    box-shadow:0 8px 20px rgba(0,0,0,.05);
+    margin:4px 0 12px;
+  }
 
-    /* Header */
-    .header{
-      text-align:center;
-      padding:10px 8px 2px;
-    }
+  .top{text-align:center;}
+  .avatar{
+    width:78px;height:78px;border-radius:50%;
+    display:block;margin:6px auto 10px;
+    box-shadow:0 8px 20px rgba(0,0,0,.10);
+  }
+  .kicker{
+    font-size:14px;color:var(--muted);
+    margin:0 0 6px;font-weight:900;letter-spacing:.1px;
+  }
+  .headline{
+    font-size:19px;line-height:1.18;
+    margin:0 0 8px;font-weight:900;letter-spacing:-.3px;
+  }
+  .sub{
+    font-size:14px;color:var(--muted);
+    margin:0 0 2px;line-height:1.45;font-weight:850;
+  }
 
-    .hero-img{
-      width:78px;height:78px;
-      border-radius:50%;
-      display:block;
-      margin:4px auto 10px;
-      box-shadow:0 10px 22px rgba(0,0,0,.12);
-      object-fit:cover;
-      background:#fff;
-    }
+  /* Single CTA (iOS-like, super tappable) */
+  .shein-btn{
+    background:linear-gradient(135deg,var(--pink),var(--pink2));
+    color:#fff;
+    padding:16px 18px;
+    border:0;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:flex-start;
+    border-radius:999px;
+    width:100%;
+    margin:12px auto 10px;
+    text-decoration:none;
+    position:relative;
+    transition:transform .18s ease, filter .18s ease;
+    box-shadow:0 18px 40px rgba(255,79,166,.26);
+    -webkit-tap-highlight-color:transparent;
+    user-select:none;
+    overflow:hidden;
+  }
+  .shein-btn:before{
+    content:"";
+    position:absolute;inset:0;
+    background:radial-gradient(140px 70px at 18% 45%, rgba(255,255,255,.26), transparent 60%);
+    pointer-events:none;
+  }
+  .shein-btn:hover{transform:scale(1.02); filter:saturate(1.04);}
+  .shein-btn:active{transform:scale(0.99);}
 
-    h1{
-      margin:0 0 6px;
-      font-size:20px;
-      font-weight:950;
-      letter-spacing:-.3px;
-      line-height:1.15;
-    }
+  .btn-icon{
+    width:44px;height:44px;border-radius:50%;
+    flex:0 0 auto;
+    box-shadow:0 8px 18px rgba(0,0,0,.12);
+    background:#fff;
+  }
+  .btn-text{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    margin-left:12px;
+    min-width:0;
+  }
+  .btn-title{font-size:16px;font-weight:900;line-height:1.15;}
+  .btn-sub{font-size:12px;opacity:.96;margin-top:3px;font-weight:900;}
 
-    .sub{
-      margin:0;
-      font-size:13px;
-      color:var(--muted);
-      font-weight:850;
-      line-height:1.45;
-    }
+  .btn-arrow{
+    width:34px;height:34px;border-radius:999px;
+    background:rgba(255,255,255,.24);
+    display:flex;align-items:center;justify-content:center;
+    font-weight:900;
+    margin-left:10px;
+    flex:0 0 auto;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.18);
+  }
 
-    /* Steps */
-    .steps{
-      margin-top:14px;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-    }
-    .step{
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:12px 12px;
-      display:flex;
-      align-items:flex-start;
-      gap:10px;
-      background:#fff;
-      box-shadow:0 10px 18px rgba(0,0,0,.03);
-    }
-    .num{
-      width:30px;height:30px;border-radius:999px;
-      background:linear-gradient(135deg,var(--pink),var(--pink2));
-      color:#fff;
-      display:flex;align-items:center;justify-content:center;
-      font-weight:950;
-      flex:0 0 auto;
-      box-shadow:0 12px 24px rgba(255,79,166,.22);
-      margin-top:1px;
-    }
-    .txt{
-      font-size:13px;
-      font-weight:900;
-      color:#1a1a1a;
-      line-height:1.25;
-    }
+  .micro{
+    text-align:center;
+    font-size:12px;
+    color:#7a7a7a;
+    margin:8px 0 10px;
+    font-weight:900;
+  }
 
-    /* CTA */
-    .cta{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      width:100%;
-      border:0;
-      border-radius:16px;
-      padding:15px 16px;
-      margin-top:14px;
-      cursor:pointer;
-      background:linear-gradient(135deg,var(--pink),var(--pink2));
-      color:#fff;
-      font-weight:950;
-      letter-spacing:.4px;
-      text-transform:uppercase;
-      box-shadow:0 18px 40px rgba(255,79,166,.26);
-      -webkit-tap-highlight-color:transparent;
-      transition:transform .18s ease, filter .18s ease;
-      text-decoration:none;
-    }
-    .cta:hover{transform:scale(1.01); filter:saturate(1.03);}
-    .cta:active{transform:scale(.99);}
+  .eligible-box{
+    background:rgba(255,255,255,.94);
+    margin:10px auto 14px;
+    padding:11px 14px;
+    font-size:13px;
+    text-align:center;
+    color:#333;
+    border-radius:14px;
+    border:1px solid rgba(238,238,238,.9);
+    box-shadow:0 8px 18px rgba(0,0,0,.05);
+    font-weight:900;
+    min-height:40px;
+    display:flex;align-items:center;justify-content:center;
+  }
 
-    .micro{
-      margin:10px 0 0;
-      text-align:center;
-      font-size:11px;
-      color:#7a7a7a;
-      font-weight:850;
-      line-height:1.35;
-    }
+  .divider{
+    height:1px;
+    background:linear-gradient(90deg, transparent, rgba(0,0,0,.06), transparent);
+    margin:12px 0 10px;
+  }
 
-    .divider{
-      height:1px;
-      background:linear-gradient(90deg, transparent, rgba(0,0,0,.06), transparent);
-      margin:16px 0 12px;
-    }
+  /* Steps (visible, short, friendly) */
+  .how-box{
+    margin:12px 0 6px;
+    border:1px solid rgba(238,238,238,.95);
+    border-radius:18px;
+    padding:12px;
+    background:rgba(255,255,255,.97);
+    box-shadow:var(--shadowSoft);
+  }
+  .how-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    font-weight:900;
+    font-size:13px;
+    color:#222;
+    margin-bottom:8px;
+  }
+  .tap-pill{
+    font-size:11px;
+    font-weight:900;
+    padding:5px 10px;
+    border-radius:999px;
+    border:1px solid #f1f1f1;
+    background:#fafafa;
+    color:#333;
+  }
 
-    /* FAQ */
-    .faq-title{
-      font-weight:950;
-      font-size:14px;
-      margin:0 0 10px;
-      text-align:center;
-    }
-    details{
-      border:1px solid var(--line);
-      border-radius:14px;
-      background:#fff;
-      overflow:hidden;
-      box-shadow:0 10px 18px rgba(0,0,0,.03);
-      margin:10px 0;
-    }
-    summary{
-      list-style:none;
-      cursor:pointer;
-      padding:12px 12px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      font-weight:900;
-      font-size:13px;
-    }
-    summary::-webkit-details-marker{display:none;}
-    .chev{
-      width:28px;height:28px;border-radius:999px;
-      display:flex;align-items:center;justify-content:center;
-      background:rgba(255,79,166,.10);
-      color:#ff2f97;
-      font-weight:950;
-      flex:0 0 auto;
-      transition:transform .2s ease;
-    }
-    details[open] .chev{transform:rotate(180deg);}
-    .faq-body{
-      padding:0 12px 12px;
-      color:#404040;
-      font-weight:800;
-      font-size:12px;
-      line-height:1.55;
-      border-top:1px solid rgba(0,0,0,.05);
-    }
+  .steps{margin-top:6px;font-size:13px;color:#333;line-height:1.55;font-weight:850;}
+  .step-row{display:flex;gap:10px;align-items:flex-start;padding:8px 6px;border-radius:12px;}
+  .step-row:not(:last-child){border-bottom:1px solid rgba(0,0,0,.04);}
+  .step-num{
+    width:24px;height:24px;border-radius:999px;
+    background:rgba(255,79,166,.12);
+    color:#ff2f97;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:900;font-size:12px;margin-top:1px;
+    flex:0 0 auto;
+  }
+  .step-text{flex:1;}
 
-    .footer{
-      margin-top:14px;
-      text-align:center;
-      font-size:11px;
-      color:#7a7a7a;
-      font-weight:850;
-      line-height:1.4;
-    }
-    .footer a{color:#7a7a7a; text-decoration:none; font-weight:900;}
-    .footer a:hover{text-decoration:underline;}
-    .sep{opacity:.6; margin:0 8px;}
-  </style>
+  /* EPC helper line (soft commitment, low CTR impact) */
+  .tip{
+    margin:10px 0 0;
+    font-size:12px;
+    color:#7a7a7a;
+    font-weight:900;
+    text-align:center;
+  }
+</style>
 </head>
 
 <body>
   <div class="wrap">
-    <div class="card">
 
-      <div class="header">
-        <img class="hero-img"
-             src="https://i.postimg.cc/zBfxrrSy/c5910bd5-e5b2-4c70-b124-9560d8cbf698-link-in-bio-links-block-home-2af2051e-f17c-4f49-8af7-1eac99.webp"
-             alt="Header"/>
-        <h1>Complete Your Registration</h1>
-        <p class="sub">Follow these simple steps to continue and claim your reward.</p>
+    <div class="top-card">
+      <div class="top">
+        <img class="avatar" src="https://i.postimg.cc/rppXNYm8/67829a8592805-66f2edc54b343-image1.png" alt=""/>
+        <p class="kicker">if you’re wondering too…</p>
+        <h1 class="headline">this is the SHEIN gift card 💖</h1>
+        <p class="sub">Tap below to continue.</p>
+      </div>
+    </div>
+
+    <!-- SINGLE CTA ONLY -->
+    <a href="#" class="shein-btn cta-link" id="shein-btn" aria-label="SHEIN Gift Card">
+      <img class="btn-icon" src="https://i.postimg.cc/zBfxrrSy/c5910bd5-e5b2-4c70-b124-9560d8cbf698-link-in-bio-links-block-home-2af2051e-f17c-4f49-8af7-1eac99.webp" alt=""/>
+      <div class="btn-text">
+        <span class="btn-title">Reveal my reward</span>
+        <span class="btn-sub">Continue →</span>
+      </div>
+      <div class="btn-arrow" aria-hidden="true">›</div>
+    </a>
+
+    <p class="micro">works on mobile • official partners</p>
+
+    <!-- Positive instantly; geo will refine -->
+    <div class="eligible-box" id="eligible-box">✅ Reward available in your country 🌍</div>
+
+    <div class="divider"></div>
+
+    <!-- Steps (visible, not collapsed) -->
+    <div class="how-box" id="how">
+      <div class="how-head">
+        <span>How it works</span>
+        <span class="tap-pill">3 steps</span>
       </div>
 
       <div class="steps">
-        <div class="step"><div class="num">1</div><div class="txt">Click on “Claim Now”</div></div>
-        <div class="step"><div class="num">2</div><div class="txt">Enter your email and basic info</div></div>
-        <div class="step"><div class="num">3</div><div class="txt">Complete 4–5 sponsored deals</div></div>
-        <div class="step"><div class="num">4</div><div class="txt">Enjoy your $750 SHEIN gift card!</div></div>
-      </div>
-
-      <a class="cta cta-link" href="#" aria-label="Claim Now">CLAIM NOW</a>
-
-      <div class="micro">
-        By clicking “Claim Now”, you agree to complete the required steps to qualify.
-      </div>
-
-      <div class="divider"></div>
-
-      <div class="faq-title">Frequently Asked Questions</div>
-
-      <details>
-        <summary>How long do the deals take? <span class="chev">⌄</span></summary>
-        <div class="faq-body">
-          You can typically complete all required sponsored deals within 5–7 days (some may take up to 60 days depending on the offer terms).
+        <div class="step-row">
+          <div class="step-num">1</div>
+          <div class="step-text">Tap the pink button above 👆</div>
         </div>
-      </details>
-
-      <details>
-        <summary>What are deals? <span class="chev">⌄</span></summary>
-        <div class="faq-body">
-          Deals can include mobile apps/games, subscriptions, services, and trials. Some are free, while many require a purchase or paid participation.
+        <div class="step-row">
+          <div class="step-num">2</div>
+          <div class="step-text">Enter your email to continue</div>
         </div>
-      </details>
-
-      <details>
-        <summary>How many deals do I have to do? <span class="chev">⌄</span></summary>
-        <div class="faq-body">
-          The exact number depends on the reward requirements shown on the next page and may vary by reward level.
-        </div>
-      </details>
-
-      <details>
-        <summary>When will I receive my reward? <span class="chev">⌄</span></summary>
-        <div class="faq-body">
-          After you finish the required deals, you must complete the reward claims process (which may require ID verification). Verification typically takes 1–3 days.
-        </div>
-      </details>
-
-      <div class="footer">
-        <a href="PRIVACY_URL" target="_blank" rel="nofollow noopener">Privacy Policy</a>
-        <span class="sep">•</span>
-        <a href="TERMS_URL" target="_blank" rel="nofollow noopener">Terms</a>
-        <span class="sep">•</span>
-        <a href="SUPPORT_URL" target="_blank" rel="nofollow noopener">Support</a>
-        <div style="margin-top:8px;">
-          Sponsored partner offers • Not affiliated with brands unless stated
+        <div class="step-row">
+          <div class="step-num">3</div>
+          <div class="step-text">Follow the steps shown to claim ✅</div>
         </div>
       </div>
 
+      <p class="tip">Tip: follow the steps shown on the next page to receive it 💖</p>
     </div>
+
   </div>
 
- <!-- UMAMI (correct website id) -->
-<script
-  defer
-  src="https://cloud.umami.is/script.js"
-  data-website-id="8ca5b018-f00b-4957-8139-ce0333d8fce2">
-</script>
+  <!-- UMAMI -->
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="8ca5b018-f00b-4957-8139-ce0333d8fce2"></script>
 
-<script>
-  const buttons = document.querySelectorAll('.cta-link');
+  <script>
+    const eligibleBox = document.getElementById('eligible-box');
+    const buttons = document.querySelectorAll('.cta-link');
 
-  const linkUS="https://glctrk.org/aff_c?offer_id=1146&aff_id=15802";
-  const linkCA="https://glctrk.org/aff_c?offer_id=1224&aff_id=15802";
-  const linkGB="https://glctrk.org/aff_c?offer_id=1224&aff_id=15802";
-  const linkAU="https://glctrk.org/aff_c?offer_id=1224&aff_id=15802";
-  const linkRest="https://rewardorbit.com/r/eyJ0Ijoic2hlaW4iLCJ1IjoiNjdkNTliZmEzNjlmZTUyYjM5YTAwOTdmIiwiYSI6Ijc1MCIsInRzIjoxNzY1MjMyNDg5MjAyfQ?amount=750";
+    // redirect links (UNCHANGED)
+const linkUS="https://glctrk.org/aff_c?offer_id=1146&aff_id=15802";  
+const linkCA="https://glctrk.org/aff_c?offer_id=1224&aff_id=15802";
+const linkGB="https://glctrk.org/aff_c?offer_id=1224&aff_id=15802"; 
+const linkAU="https://glctrk.org/aff_c?offer_id=1224&aff_id=15802";  
+    const linkRest="https://rewardorbit.com/r/eyJ0Ijoic2hlaW4iLCJ1IjoiNjdkNTliZmEzNjlmZTUyYjM5YTAwOTdmIiwiYSI6Ijc1MCIsInRzIjoxNzY1MjMyNDg5MjAyfQ?amount=750";
 
-  // default instantly
-  buttons.forEach(b => b.href = linkRest);
+    // default instantly for ALL buttons
+    buttons.forEach(b => b.href = linkRest);
 
-  const withTimeout = (p, ms=1200) =>
-    Promise.race([p, new Promise((_,rej)=>setTimeout(()=>rej(new Error("timeout")), ms))]);
+    // ---- GEO FIX (high-traffic safe): timeout + cache-bust + 3 providers + final fallback ----
+    const withTimeout = (p, ms=1200) =>
+      Promise.race([p, new Promise((_,rej)=>setTimeout(()=>rej(new Error("timeout")), ms))]);
 
-  const tryProvider = async (url, mapFn) => {
-    const sep = url.includes("?") ? "&" : "?";
-    const r = await withTimeout(fetch(url + sep + "_=" + Date.now(), {
-      cache: "no-store",
-      credentials: "omit"
-    }), 1200);
-    if(!r.ok) throw new Error("bad_status_" + r.status);
-    const d = await r.json();
-    const out = mapFn(d);
-    if(!out || !out.cc) throw new Error("bad_payload");
-    return out;
-  };
+    const tryProvider = async (url, mapFn) => {
+      const sep = url.includes("?") ? "&" : "?";
+      const r = await withTimeout(fetch(url + sep + "_=" + Date.now(), {
+        cache: "no-store",
+        credentials: "omit"
+      }), 1200);
+      if(!r.ok) throw new Error("bad_status_" + r.status);
+      const d = await r.json();
+      const out = mapFn(d);
+      if(!out || !out.cc) throw new Error("bad_payload");
+      return out;
+    };
 
-  (async()=>{
-    let cc = null;
+    (async()=>{
+      try{
+        // 1) ipapi
+        const {cc, cn} = await tryProvider("https://ipapi.co/json/", d => ({ cc: d.country, cn: d.country_name }));
+        setEligible(cc, cn);
+        return;
+      }catch(e){}
 
-    try{ cc = (await tryProvider("https://ipapi.co/json/", d => ({cc:d.country}))).cc; }catch(e){}
-    if(!cc){ try{ cc = (await tryProvider("https://ipwho.is/", d => ({cc:d.country_code}))).cc; }catch(e){} }
-    if(!cc){ try{ cc = (await tryProvider("https://ipinfo.io/json", d => ({cc:d.country}))).cc; }catch(e){} }
+      try{
+        // 2) ipwho
+        const {cc, cn} = await tryProvider("https://ipwho.is/", d => ({ cc: d.country_code, cn: d.country }));
+        setEligible(cc, cn);
+        return;
+      }catch(e){}
 
-    let target = linkRest;
-    if(cc==="US") target = linkUS;
-    else if(cc==="CA") target = linkCA;
-    else if(cc==="GB") target = linkGB;
-    else if(cc==="AU") target = linkAU;
+      try{
+        // 3) ipinfo (extra backup for high-traffic spikes)
+        const {cc, cn} = await tryProvider("https://ipinfo.io/json", d => ({ cc: d.country, cn: d.country }));
+        setEligible(cc, cn);
+        return;
+      }catch(e){}
 
-    buttons.forEach(b => b.href = target);
-  })();
-
-  // Wait for umami to exist (max 900ms) before redirect
-  const waitForUmami = (ms=900) => new Promise((resolve)=>{
-    const start = Date.now();
-    (function tick(){
-      if (window.umami && typeof window.umami.track === "function") return resolve(true);
-      if (Date.now() - start > ms) return resolve(false);
-      setTimeout(tick, 50);
+      // Final fallback: don't leave "Checking..."
+      eligibleBox.textContent = "✅ Reward available 🌍";
     })();
-  });
+    // ----------------------------------------------------------------------------------------
 
-  buttons.forEach((btn)=>{
-    btn.addEventListener('click', async (e)=>{
-      e.preventDefault();
-      const url = btn.href;
+    function countryCodeToFlagEmoji(cc){
+      if(!cc || cc.length!==2) return "";
+      return String.fromCodePoint(...[...cc.toUpperCase()].map(c=>127397+c.charCodeAt()));
+    }
 
-      const ready = await waitForUmami(900);
-      if (ready) window.umami.track("SHEIN Offer Click");
+    function setEligible(cc, cn){
+      eligibleBox.textContent = cn
+        ? `✅ Reward available in ${cn} ${countryCodeToFlagEmoji(cc)}`
+        : `✅ Reward available ${countryCodeToFlagEmoji(cc)}`;
 
-      setTimeout(()=>{ window.location.href = url; }, 160);
+      let target = linkRest;
+      if(cc==="US") target = linkUS;
+      else if(cc==="CA") target = linkCA;
+      else if(cc==="GB") target = linkGB;
+      else if(cc==="AU") target = linkAU;
+
+      buttons.forEach(b => b.href = target);
+    }
+
+    // Umami tracking with delay to fire before redirect (UNCHANGED EVENT NAME)
+    buttons.forEach((btn)=>{
+      btn.addEventListener('click',(e)=>{
+        e.preventDefault();
+        const url = btn.href;
+        if(window.umami) umami.track("SHEIN Offer Click");
+        setTimeout(()=>{window.location.href=url;},160);
+      });
     });
-  });
-</script>
+  </script>
 </body>
 </html>
