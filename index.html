@@ -1,363 +1,906 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-61W01PQPY8"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title id="pageTitle">Claim Rewards & Unlock Deals</title>
 
-  gtag('config', 'G-61W01PQPY8');
-</script>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>SHEIN Gift Card</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet" />
 
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<style id="themeStyles">
+  :root {
+    --bg: #000000;
+    --card: #141414;
+    --ink: #ffffff;
+    --body: #e5e5e5;
+    --line: #222222;
+    --shadow: 0 10px 30px rgba(0,0,0,0.8);
 
-<style>
-  :root{
-    --pink:#ff4fa6;
-    --pink2:#ff7ec6;
-    --text:#111;
-    --muted:#6d6d6d;
-    --card:#ffffff;
-    --line:#eeeeee;
-    --shadow:0 10px 28px rgba(0,0,0,.10);
-    --shadowSoft:0 10px 24px rgba(0,0,0,.06);
+    --accent: #E50914; /* Netflix Red */
+    --accent-hover: #b81d24;
+    --accent-contrast: #ffffff;
+    --grey-light: #1f1f1f;
+    --grey-dark: #aaaaaa;
+    --border-oval: 6px;
+    --cta-grad: linear-gradient(180deg, #E50914 0%, #B81D24 100%);
+    
+    --badge-bg: #1f1f1f;
+    --badge-text: #ffffff;
+    --toast-bg: #1f1f1f;
+    --toast-text: #ffffff;
+    --payout-bg: rgba(229, 9, 20, 0.15);
+    --payout-color: #ff333d;
+    --payout-border: rgba(229, 9, 20, 0.4);
   }
 
-  *{box-sizing:border-box;}
+  /* Shein Specific Theme Overrides (US/UK/AU/CA/NP) */
+  body.theme-shein {
+    --bg: #f8f8f8;
+    --card: #ffffff;
+    --ink: #000000;
+    --body: #1a1a1a;
+    --line: #ededed;
+    --shadow: 0 8px 24px rgba(0,0,0,0.06);
+
+    --accent: #000000;
+    --accent-hover: #222222;
+    --accent-contrast: #ffffff;
+    --grey-light: #f4f4f4;
+    --grey-dark: #444444;
+    --border-oval: 50px;
+    --cta-grad: #000000;
+    
+    --badge-bg: #000000;
+    --badge-text: #ffffff;
+    --toast-bg: #000000;
+    --toast-text: #ffffff;
+    --payout-bg: rgba(0, 200, 83, 0.12);
+    --payout-color: #00a843;
+    --payout-border: rgba(0, 200, 83, 0.25);
+  }
+
+  /* TesterHeld CPI (DE/CH/AT) — same Teststar family, slightly darker */
+  body.theme-testerheld {
+    --bg: #05070B;
+    --card: #121218;
+  }
+
+  /* Teststar CPI Theme Overrides (EU/Nordics) */
+  body.theme-teststar {
+    --bg: #0b071e;
+    --card: #150d36;
+    --ink: #ffffff;
+    --body: #e4e0ff;
+    --line: #2a1b63;
+    --shadow: 0 10px 30px rgba(127, 81, 255, 0.22);
+
+    --accent: #7f51ff;
+    --accent-hover: #6934ff;
+    --accent-contrast: #ffffff;
+    --grey-light: #1f144d;
+    --grey-dark: #b8acff;
+    --border-oval: 50px;
+    --cta-grad: linear-gradient(90deg, #7f51ff 0%, #9b72ff 100%);
+    
+    --badge-bg: #1f144d;
+    --badge-text: #ffffff;
+    --toast-bg: #1f144d;
+    --toast-text: #ffffff;
+    --payout-bg: rgba(0, 230, 118, 0.15);
+    --payout-color: #00e676;
+    --payout-border: rgba(0, 230, 118, 0.3);
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
   body{
-    background:#f6f6f8;
     margin:0;
-    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",Arial,'Montserrat',sans-serif;
-    color:var(--text);
+    font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    background:var(--bg); color:var(--body); line-height:1.5;
+    -webkit-font-smoothing: antialiased;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  body.loaded { opacity: 1; }
+  .wrap{max-width:550px;margin:0 auto;padding:16px}
+
+  /* HEADER / HERO */
+  header{
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    padding: 24px 16px;
+    text-align: center;
+  }
+  h1{margin:0 0 16px;color:var(--ink);font-size:22px;font-weight:800;letter-spacing:0.3px;text-transform:uppercase}
+
+  /* TIMER */
+  .timer{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--grey-light);
+    color:var(--ink) !important;
+    border: 1px solid var(--line);
+    padding:8px 18px;border-radius:50px;
+    font-weight:700;font-size:11px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+  }
+  .timer .tag{
+    background:var(--accent);
+    padding:3px 10px;
+    border-radius:50px;
+    color:var(--accent-contrast) !important;
+    font-size:11px;
   }
 
-  .wrap{
-    max-width:520px;
-    margin:0 auto;
-    padding:16px 14px 34px;
-    position:relative;
+  /* OFFER CARD */
+  .offer{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:16px;
+    box-shadow:var(--shadow);
+    padding:20px;
+    display:grid;
+    grid-template-columns:70px 1fr;
+    gap:16px; align-items:center;
+    margin:16px 0;
+    opacity:0; transform:translateY(12px);
   }
+  .offer.reveal{ opacity:1; transform:translateY(0); transition:opacity .45s ease, transform .45s ease; }
 
-  .top-card{
-    background:rgba(255,255,255,.96);
-    border:1px solid rgba(0,0,0,.06);
-    border-radius:22px;
-    padding:12px 12px 10px;
-    box-shadow:0 8px 20px rgba(0,0,0,.05);
-    margin:4px 0 12px;
-  }
-
-  .top{text-align:center;}
-  .avatar{
-    width:78px;height:78px;border-radius:50%;
-    display:block;margin:6px auto 10px;
-    box-shadow:0 8px 20px rgba(0,0,0,.10);
-  }
-  .kicker{
-    font-size:14px;color:var(--muted);
-    margin:0 0 6px;font-weight:900;letter-spacing:.1px;
-  }
-  .headline{
-    font-size:19px;line-height:1.18;
-    margin:0 0 8px;font-weight:900;letter-spacing:-.3px;
-  }
-  .sub{
-    font-size:14px;color:var(--muted);
-    margin:0 0 2px;line-height:1.45;font-weight:850;
-  }
-
-  /* Single CTA (iOS-like, super tappable) */
-  .shein-btn{
-    background:linear-gradient(135deg,var(--pink),var(--pink2));
-    color:#fff;
-    padding:16px 18px;
-    border:0;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:flex-start;
-    border-radius:999px;
-    width:100%;
-    margin:12px auto 10px;
-    text-decoration:none;
-    position:relative;
-    transition:transform .18s ease, filter .18s ease;
-    box-shadow:0 18px 40px rgba(255,79,166,.26);
-    -webkit-tap-highlight-color:transparent;
-    user-select:none;
-    overflow:hidden;
-  }
-  .shein-btn:before{
-    content:"";
-    position:absolute;inset:0;
-    background:radial-gradient(140px 70px at 18% 45%, rgba(255,255,255,.26), transparent 60%);
-    pointer-events:none;
-  }
-  .shein-btn:hover{transform:scale(1.02); filter:saturate(1.04);}
-  .shein-btn:active{transform:scale(0.99);}
-
-  .btn-icon{
-    width:44px;height:44px;border-radius:50%;
-    flex:0 0 auto;
-    box-shadow:0 8px 18px rgba(0,0,0,.12);
-    background:#fff;
-  }
-  .btn-text{
-    flex:1;
+  /* LOGO CONTAINER */
+  .logo-container {
+    width:70px;
+    height:70px;
+    border-radius:12px;
+    background: linear-gradient(135deg, #E50914 0%, #8C060D 100%);
+    color:#ffffff;
     display:flex;
     flex-direction:column;
-    align-items:flex-start;
-    margin-left:12px;
-    min-width:0;
-  }
-  .btn-title{font-size:16px;font-weight:900;line-height:1.15;}
-  .btn-sub{font-size:12px;opacity:.96;margin-top:3px;font-weight:900;}
-
-  .btn-arrow{
-    width:34px;height:34px;border-radius:999px;
-    background:rgba(255,255,255,.24);
-    display:flex;align-items:center;justify-content:center;
-    font-weight:900;
-    margin-left:10px;
-    flex:0 0 auto;
-    box-shadow:inset 0 0 0 1px rgba(255,255,255,.18);
-  }
-
-  .micro{
-    text-align:center;
-    font-size:12px;
-    color:#7a7a7a;
-    margin:8px 0 10px;
-    font-weight:900;
-  }
-
-  .eligible-box{
-    background:rgba(255,255,255,.94);
-    margin:10px auto 14px;
-    padding:11px 14px;
-    font-size:13px;
-    text-align:center;
-    color:#333;
-    border-radius:14px;
-    border:1px solid rgba(238,238,238,.9);
-    box-shadow:0 8px 18px rgba(0,0,0,.05);
-    font-weight:900;
-    min-height:40px;
-    display:flex;align-items:center;justify-content:center;
-  }
-
-  .divider{
-    height:1px;
-    background:linear-gradient(90deg, transparent, rgba(0,0,0,.06), transparent);
-    margin:12px 0 10px;
-  }
-
-  /* Steps (visible, short, friendly) */
-  .how-box{
-    margin:12px 0 6px;
-    border:1px solid rgba(238,238,238,.95);
-    border-radius:18px;
-    padding:12px;
-    background:rgba(255,255,255,.97);
-    box-shadow:var(--shadowSoft);
-  }
-  .how-head{
-    display:flex;
     align-items:center;
-    justify-content:space-between;
-    gap:10px;
-    font-weight:900;
-    font-size:13px;
-    color:#222;
-    margin-bottom:8px;
+    justify-content:center;
+    gap: 2px;
+    font-weight:800;
+    font-size:10px;
+    letter-spacing:0.8px;
+    border:1px solid var(--line);
+    box-shadow: 0 4px 16px rgba(229, 9, 20, 0.4);
+    text-align: center;
   }
-  .tap-pill{
-    font-size:11px;
-    font-weight:900;
-    padding:5px 10px;
-    border-radius:999px;
-    border:1px solid #f1f1f1;
-    background:#fafafa;
-    color:#333;
+  body.theme-shein .logo-container {
+    background: #000000;
+    border-radius: 18px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    font-size: 12px;
+  }
+  body.theme-teststar .logo-container {
+    background: linear-gradient(135deg, #7f51ff 0%, #4f22e2 100%);
+    border-radius: 18px;
+    box-shadow: 0 4px 16px rgba(127, 81, 255, 0.4);
+    font-size: 10px;
+  }
+  .logo-container svg { width: 28px; height: 28px; fill: #ffffff; }
+
+  .title{margin:0;color:var(--ink);font-size:17px;font-weight:800;text-transform:uppercase;letter-spacing:0.3px}
+  .blurb{margin:6px 0 0;font-size:14px;font-weight:500;color:var(--body)}
+
+  /* CTA Button */
+  .cta{
+    grid-column:1/-1;margin-top:12px;
+    display:block;width:100%;text-align:center;text-decoration:none;
+    border:0;border-radius:var(--border-oval);padding:16px 18px;
+    font-weight:800;cursor:pointer;color:var(--accent-contrast);
+    background:var(--cta-grad);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 14px;
+    transition: transform .2s ease, box-shadow .2s ease;
+    animation: premiumCTAForce 2.4s ease-in-out infinite;
+  }
+  .cta:hover{ transform:scale(1.03) !important;}
+  .cta:active{transform:scale(0.98) !important;}
+  
+  @keyframes premiumCTAForce {
+    0% { transform: scale(1); box-shadow: 0 4px 12px rgba(229, 9, 20, 0.3); }
+    50% { transform: scale(1.03); box-shadow: 0 12px 24px rgba(229, 9, 20, 0.6); }
+    100% { transform: scale(1); box-shadow: 0 4px 12px rgba(229, 9, 20, 0.3); }
   }
 
-  .steps{margin-top:6px;font-size:13px;color:#333;line-height:1.55;font-weight:850;}
-  .step-row{display:flex;gap:10px;align-items:flex-start;padding:8px 6px;border-radius:12px;}
-  .step-row:not(:last-child){border-bottom:1px solid rgba(0,0,0,.04);}
-  .step-num{
-    width:24px;height:24px;border-radius:999px;
-    background:rgba(255,79,166,.12);
-    color:#ff2f97;
-    display:flex;align-items:center;justify-content:center;
-    font-weight:900;font-size:12px;margin-top:1px;
-    flex:0 0 auto;
+  /* HOW IT WORKS */
+  .how{
+    background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);
+    padding:20px;margin:16px 0;
   }
-  .step-text{flex:1;}
+  .how h2{margin:0 0 16px;text-align:center;color:var(--ink);font-size:18px;font-weight:800;text-transform:uppercase;letter-spacing:0.3px}
+  .steps{display:grid;gap:12px}
+  .step{background:var(--grey-light);border:1px solid var(--line);border-radius:12px;padding:14px;display:flex;gap:12px;align-items:flex-start}
+  .ico{flex:0 0 auto;width:32px;height:32px;border-radius:8px;background:#000000;border:1px solid var(--line);display:grid;place-items:center;font-size:14px}
+  body.theme-shein .ico { background: #ffffff; border-radius: 10px; }
+  body.theme-teststar .ico { background: #130a30; border-radius: 10px; }
+  .step h3{margin:0 0 4px;font-size:14px;color:var(--ink);font-weight:700}
+  .step p{margin:0;font-size:13px;color:var(--grey-dark)}
 
-  /* EPC helper line (soft commitment, low CTR impact) */
-  .tip{
-    margin:10px 0 0;
-    font-size:12px;
-    color:#7a7a7a;
-    font-weight:900;
-    text-align:center;
+  /* VALUE BADGE / REWARD STRUCTURE */
+  .value-badge {
+    background: var(--grey-light);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 16px;
+    margin-top: 14px;
+  }
+  .value-badge-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .value-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .value-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--body);
+    padding-bottom: 4px;
+    border-bottom: 1px dashed var(--line);
+  }
+  .value-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .value-row strong { color: var(--payout-color); font-weight: 700; }
+
+  /* PROOF SECTION */
+  .proof{
+    background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);
+    padding:20px;margin:16px 0;
+  }
+  .proof h2{margin:0 0 6px;text-align:center;color:var(--ink);font-size:18px;font-weight:800;text-transform:uppercase;letter-spacing:0.3px}
+  .ticker-hint { text-align: center; font-size: 11px; color: var(--grey-dark); margin-bottom: 14px; }
+
+  /* INFINITE TICKER ENGINE */
+  .vouch-ticker-viewport {
+    height: 340px;
+    overflow: hidden;
+    position: relative;
+    border-radius: 12px;
+    mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%);
+    user-select: none;
+    cursor: pointer;
+  }
+  
+  .vouch-ticker-track {
+    display: flex;
+    flex-direction: column;
+    will-change: transform;
+    animation: scrollContinuous 55s linear infinite;
+  }
+  .vouch-ticker-track.paused {
+    animation-play-state: paused !important;
+  }
+
+  @keyframes scrollContinuous {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-50%); }
+  }
+
+  .vouch-group { display: flex; flex-direction: column; gap: 12px; padding-bottom: 12px; }
+  .vouch-card { background: var(--grey-light); border: 1px solid var(--line); border-radius: 12px; padding: 14px; flex-shrink: 0; }
+  .vouch-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+  .vouch-user { font-weight: 700; font-size: 13px; color: var(--ink) !important; }
+  .vouch-payout {
+    background: var(--payout-bg); color: var(--payout-color) !important;
+    border: 1px solid var(--payout-border); font-weight: 800; font-size: 12px;
+    padding: 3px 10px; border-radius: 20px;
+  }
+  .vouch-text { font-size: 13px; color: var(--body) !important; margin: 0 0 8px; line-height: 1.4; }
+  .vouch-meta { display: flex; justify-content: space-between; align-items: center; font-size: 11px; }
+  .vouch-tag { font-weight: 600; color: var(--accent); display: inline-flex; align-items: center; gap: 4px; }
+  .vouch-time { font-weight: 600; color: var(--grey-dark); opacity: 0.85; }
+
+  /* FAQ */
+  .faq{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:20px;margin:16px 0}
+  .faq h2{margin:0 0 16px;text-align:center;color:var(--ink);font-size:18px;font-weight:800;text-transform:uppercase;letter-spacing:0.3px}
+  details{background:var(--grey-light);border:1px solid var(--line);border-radius:12px;padding:14px;margin:10px 0}
+  summary{cursor:pointer;font-weight:700;font-size:14px;color:var(--ink);position:relative;padding-right:20px;list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:'+';position:absolute;right:6px;top:0;font-weight:700;font-size:16px;color:var(--accent)}
+  details[open] summary::after{content:'−'}
+  
+  .details-content {margin-top: 10px;border-top: 1px solid var(--line);padding-top: 10px}
+  .details-ans-main {display: block;font-size: 14px;color: var(--ink);font-weight: 700;line-height: 1.4;margin-bottom: 6px}
+  .details-ans-sub {display: block;font-size: 13px;color: var(--grey-dark);line-height: 1.5}
+
+  .rating{text-align:center;font-weight:700;color:var(--ink);margin:24px 0 8px;font-size:13px;letter-spacing:0.2px}
+  .foot{font-size:11px;color:var(--grey-dark);text-align:center;margin:16px 0;letter-spacing:0.5px}
+
+  /* SHEIN PAYOUT TABLE — hidden unless theme-shein (US/UK/CA/AU/NP) */
+  .shein-payout-card { display: none; }
+  body.theme-shein .shein-payout-card {
+    display: block;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    padding: 20px;
+    margin: 16px 0;
+  }
+  body.theme-shein .shein-payout-card h2 {
+    margin: 0 0 6px;
+    text-align: center;
+    color: var(--ink);
+    font-size: 18px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  body.theme-shein .shein-payout-sub {
+    margin: 0 0 14px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--grey-dark);
+  }
+  body.theme-shein .shein-tier-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    border-radius: 14px;
+    border: 1px solid var(--line);
+    background: #ffffff;
+  }
+  body.theme-shein .shein-tier-table th,
+  body.theme-shein .shein-tier-table td {
+    padding: 9px 12px;
+    font-size: 12px;
+    text-align: center;
+  }
+  body.theme-shein .shein-tier-table th {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: var(--grey-light);
+  }
+  body.theme-shein .shein-tier-table th:first-child,
+  body.theme-shein .shein-tier-table td:first-child {
+    border-right: 1px solid var(--line);
+  }
+  body.theme-shein .shein-tier-table td {
+    font-weight: 700;
+    color: var(--ink);
+    border-top: 1px solid var(--line);
+    background: #ffffff;
+  }
+  body.theme-shein .shein-tier-table td:last-child {
+    color: var(--payout-color);
+    background: var(--payout-bg);
+  }
+  body.theme-shein .shein-tier-table tr.is-top td {
+    background: rgba(0, 168, 67, 0.10);
+    color: var(--ink);
+  }
+  body.theme-shein .shein-tier-table tr.is-top td:last-child {
+    color: var(--payout-color);
+    font-weight: 800;
+    background: rgba(0, 168, 67, 0.10);
+  }
+  body.theme-shein #promoValueBox { display: none; }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(6px);
+    z-index: 1000; display: flex; align-items: center; justify-content: center;
+    padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+  }
+  .modal-overlay.show { opacity: 1; pointer-events: auto; }
+  .modal {
+    background: #141414; border: 1px solid var(--line); border-radius: 16px;
+    padding: 28px 20px; max-width: 420px; width: 100%; text-align: center;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.8); transform: scale(0.9); transition: transform 0.3s ease;
+  }
+  body.theme-shein .modal { background: #ffffff; border-color: #ededed; }
+  body.theme-teststar .modal { background: #150d36; border-color: #2a1b63; }
+  .modal-overlay.show .modal { transform: scale(1); }
+  .modal-badge {
+    display: inline-block; background: rgba(229, 9, 20, 0.2); color: #ff333d;
+    border: 1px solid rgba(229, 9, 20, 0.4); font-size: 11px; font-weight: 800;
+    padding: 5px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px;
+  }
+  body.theme-teststar .modal-badge { background: rgba(127, 81, 255, 0.2); color: #9b72ff; border-color: rgba(127, 81, 255, 0.4); }
+  .modal-title { color: #ffffff; font-size: 19px; font-weight: 800; text-transform: uppercase; margin: 0 0 12px; }
+  body.theme-shein .modal-title { color: #000000; }
+  .modal-text { font-size: 14px; color: #cccccc; line-height: 1.5; margin-bottom: 22px; text-align: left; }
+  body.theme-shein .modal-text { color: #333333; }
+  body.theme-shein .modal-text strong { color: #000000; }
+  .modal-btn {
+    display: inline-block; width: 100%; padding: 15px; background: var(--accent); color: #ffffff;
+    border: none; border-radius: var(--border-oval); font-size: 14px; font-weight: 800; text-transform: uppercase; cursor: pointer;
   }
 </style>
 </head>
-
 <body>
-  <div class="wrap">
 
-    <div class="top-card">
-      <div class="top">
-        <img class="avatar" src="https://i.postimg.cc/rppXNYm8/67829a8592805-66f2edc54b343-image1.png" alt=""/>
-        <p class="kicker">if you’re wondering too…</p>
-        <h1 class="headline">this is the SHEIN gift card 💖</h1>
-        <p class="sub">Tap below to continue.</p>
-      </div>
+  <!-- GEO MODAL -->
+  <div class="modal-overlay" id="geoModal">
+    <div class="modal">
+      <div class="modal-badge" id="modalBadge">Region Update 📍</div>
+      <div class="modal-title" id="modalTitle">Notice</div>
+      <div class="modal-text" id="modalText">Loading offer details...</div>
+      <button class="modal-btn" onclick="closeGeoModal()">Continue & Claim Cash</button>
     </div>
-
-    <!-- SINGLE CTA ONLY -->
-    <a href="#" class="shein-btn cta-link" id="shein-btn" aria-label="SHEIN Gift Card">
-      <img class="btn-icon" src="https://i.postimg.cc/zBfxrrSy/c5910bd5-e5b2-4c70-b124-9560d8cbf698-link-in-bio-links-block-home-2af2051e-f17c-4f49-8af7-1eac99.webp" alt=""/>
-      <div class="btn-text">
-        <span class="btn-title">Reveal my reward</span>
-        <span class="btn-sub">Continue →</span>
-      </div>
-      <div class="btn-arrow" aria-hidden="true">›</div>
-    </a>
-
-    <p class="micro">works on mobile • official partners</p>
-
-    <!-- Positive instantly; geo will refine -->
-    <div class="eligible-box" id="eligible-box">✅ Reward available in your country 🌍</div>
-
-    <div class="divider"></div>
-
-    <!-- Steps (visible, not collapsed) -->
-    <div class="how-box" id="how">
-      <div class="how-head">
-        <span>How it works</span>
-        <span class="tap-pill">3 steps</span>
-      </div>
-
-      <div class="steps">
-        <div class="step-row">
-          <div class="step-num">1</div>
-          <div class="step-text">Tap the pink button above 👆</div>
-        </div>
-        <div class="step-row">
-          <div class="step-num">2</div>
-          <div class="step-text">Enter your email to continue</div>
-        </div>
-        <div class="step-row">
-          <div class="step-num">3</div>
-          <div class="step-text">Follow the steps shown to claim ✅</div>
-        </div>
-      </div>
-
-      <p class="tip">Tip: follow the steps shown on the next page to receive it 💖</p>
-    </div>
-
   </div>
 
-  <!-- UMAMI -->
- <script defer src="https://cloud.umami.is/script.js" data-website-id="e31dbf23-205e-461a-bad9-7ba00af4da9d"></script>
+  <div class="wrap">
+    <!-- HERO -->
+    <header>
+      <h1 id="promoHeader">Complete Deals & Unlock Direct Cash 👇🏻</h1>
+      <div class="timer"><span class="tag">Active Session</span> <span id="timer">24:00:00</span></div>
+    </header>
 
-  <script>
-    const eligibleBox = document.getElementById('eligible-box');
-    const buttons = document.querySelectorAll('.cta-link');
+    <!-- MAIN OFFER BLOCK -->
+    <section class="offer" id="mainOffer">
+      <div class="logo-container" id="promoLogo">
+        <svg viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg>
+        <span>DEALS</span>
+      </div>
+      <div>
+        <p class="title" id="promoTitle">Deals Reward Hub</p>
+        <p class="blurb" id="promoBlurb">The more deals you finish, the higher payout tiers you unlock!</p>
+      </div>
+      <a href="#" class="cta" id="promoCTA" onclick="routeOffer();return false;">Start Complete Deals</a>
+    </section>
 
-    // redirect links (UNCHANGED)
-const linkUS="https://giftclick.org/aff_c?offer_id=1146&aff_id=15802";  
-const linkCA="https://giftclick.org/aff_c?offer_id=1224&aff_id=15802";
-const linkGB="https://giftclick.org/aff_c?offer_id=1224&aff_id=15802"; 
-const linkAU="https://giftclick.org/aff_c?offer_id=1224&aff_id=15802";  
-    const linkRest="https://giftclick.org/aff_c?offer_id=1358&aff_id=15802";
+    <!-- SHEIN PAYOUT TABLE (US/UK/CA/AU/NP only — hidden unless body.theme-shein) -->
+    <section class="shein-payout-card" id="sheinPayoutCard">
+      <h2>How Much You Get</h2>
+      <p class="shein-payout-sub">After you complete the deals</p>
+      <table class="shein-tier-table" aria-label="Shein gift card amounts by deals completed">
+        <thead>
+          <tr>
+            <th>Deals</th>
+            <th>Shein Card</th>
+          </tr>
+        </thead>
+        <tbody id="sheinTierBody">
+          <tr><td>2</td><td class="shein-tier-amt">$5</td></tr>
+          <tr><td>5</td><td class="shein-tier-amt">$100</td></tr>
+          <tr><td>10</td><td class="shein-tier-amt">$250</td></tr>
+          <tr><td>15</td><td class="shein-tier-amt">$500</td></tr>
+          <tr><td>20</td><td class="shein-tier-amt">$750</td></tr>
+          <tr class="is-top"><td>25</td><td class="shein-tier-amt">$1,000</td></tr>
+        </tbody>
+      </table>
+    </section>
 
-    // default instantly for ALL buttons
-    buttons.forEach(b => b.href = linkRest);
+    <!-- HOW IT WORKS -->
+    <section class="how">
+      <h2 id="howItWorksHeader">How Tier Unlocks Work</h2>
+      <div class="steps" id="stepsContainer">
+        <div class="step">
+          <div class="ico" id="step1Icon">🎯</div>
+          <div>
+            <h3 id="step1Title">1. Access Deals Dashboard</h3>
+            <p id="step1Desc">Click start to view free local tasks, surveys, and app trials tailored to your area.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="ico" id="step2Icon">⚡</div>
+          <div>
+            <h3 id="step2Title">2. Complete Required Deals</h3>
+            <p id="step2Desc">Finish deals in a single session so progress logs automatically into your account.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="ico" id="step3Icon">🔥</div>
+          <div>
+            <h3 id="step3Title">3. Multiply Your Payout</h3>
+            <p id="step3Desc">Unlock higher reward levels as you stack completed deals!</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- RESTRUCTURED REWARD VALUE BOX -->
+      <div class="value-badge" id="promoValueBox">
+        <div class="value-badge-title">Reward Tier Progression</div>
+        <div class="value-grid">
+          <div class="value-row"><span>2 Completed Deals</span><strong id="tier1Val">$80 Payout</strong></div>
+          <div class="value-row"><span>5 Completed Deals</span><strong id="tier2Val">$250 Payout</strong></div>
+          <div class="value-row"><span>25 Completed Deals</span><strong id="tier3Val">$1,000 Grand Tier</strong></div>
+        </div>
+      </div>
+    </section>
 
-    // ---- GEO FIX (high-traffic safe): timeout + cache-bust + 3 providers + final fallback ----
-    const withTimeout = (p, ms=1200) =>
-      Promise.race([p, new Promise((_,rej)=>setTimeout(()=>rej(new Error("timeout")), ms))]);
+    <!-- PROOF SECTION -->
+    <section class="proof" id="proofSection">
+      <h2 id="promoSocialHeader">Live Verified Member Payouts</h2>
+      <div class="ticker-hint">💡 Double-tap feed to pause / resume scrolling</div>
+      <div id="proofInner">
+        <div class="vouch-ticker-viewport" id="vouchViewport">
+          <div class="vouch-ticker-track" id="vouchTrack"></div>
+        </div>
+      </div>
+    </section>
 
-    const tryProvider = async (url, mapFn) => {
-      const sep = url.includes("?") ? "&" : "?";
-      const r = await withTimeout(fetch(url + sep + "_=" + Date.now(), {
-        cache: "no-store",
-        credentials: "omit"
-      }), 1200);
-      if(!r.ok) throw new Error("bad_status_" + r.status);
-      const d = await r.json();
-      const out = mapFn(d);
-      if(!out || !out.cc) throw new Error("bad_payload");
-      return out;
-    };
+    <!-- EXPANDED FAQ SECTION -->
+    <section class="faq">
+      <h2 id="faqMainHeader">Frequently Asked Questions</h2>
+      <div id="faqContainer">
+        <details>
+          <summary>Do I need a credit card to participate?</summary>
+          <div class="details-content">
+            <span class="details-ans-main">No, a credit card is not required.</span>
+            <span class="details-ans-sub">Most partner deals consist of free mobile app downloads, quick surveys, or free service sign-ups. Any optional deal requiring payment is clearly labeled.</span>
+          </div>
+        </details>
 
-    (async()=>{
-      try{
-        // 1) ipapi
-        const {cc, cn} = await tryProvider("https://ipapi.co/json/", d => ({ cc: d.country, cn: d.country_name }));
-        setEligible(cc, cn);
-        return;
-      }catch(e){}
+        <details>
+          <summary>Are there any hidden fees or costs?</summary>
+          <div class="details-content">
+            <span class="details-ans-main">100% Free to join and complete.</span>
+            <span class="details-ans-sub">You will never be asked to pay to cash out your earned rewards. Our brand partners sponsor these payouts for your participation.</span>
+          </div>
+        </details>
 
-      try{
-        // 2) ipwho
-        const {cc, cn} = await tryProvider("https://ipwho.is/", d => ({ cc: d.country_code, cn: d.country }));
-        setEligible(cc, cn);
-        return;
-      }catch(e){}
+        <details>
+          <summary>How do I receive my gift card or direct cash?</summary>
+          <div class="details-content">
+            <span class="details-ans-main">Rewards are delivered digitally.</span>
+            <span class="details-ans-sub">Gift card claim codes are sent directly to the email address registered during your sign-up, while cash payouts are transferred directly to your designated PayPal account.</span>
+          </div>
+        </details>
 
-      try{
-        // 3) ipinfo (extra backup for high-traffic spikes)
-        const {cc, cn} = await tryProvider("https://ipinfo.io/json", d => ({ cc: d.country, cn: d.country }));
-        setEligible(cc, cn);
-        return;
-      }catch(e){}
+        <details>
+          <summary>Why do I need to complete deals?</summary>
+          <div class="details-content">
+            <span class="details-ans-main">Sponsors subsidize the cash reward pools.</span>
+            <span class="details-ans-sub">When you test new apps or complete partner tasks, sponsors pay a fee. We share this budget directly with you as cash and gift card payouts.</span>
+          </div>
+        </details>
 
-      // Final fallback: don't leave "Checking..."
-      eligibleBox.textContent = "✅ Reward available 🌍";
-    })();
-    // ----------------------------------------------------------------------------------------
+        <details id="faqDealsTier">
+          <summary>Why do more deals equal bigger payouts?</summary>
+          <div class="details-content">
+            <span class="details-ans-main">Higher engagement unlocks higher budget tiers.</span>
+            <span class="details-ans-sub" id="faqTierText">Completing 2 deals triggers base rewards ($80), while completing up to 25 deals triggers our highest tier ($1,000).</span>
+          </div>
+        </details>
+      </div>
+    </section>
 
-    function countryCodeToFlagEmoji(cc){
-      if(!cc || cc.length!==2) return "";
-      return String.fromCodePoint(...[...cc.toUpperCase()].map(c=>127397+c.charCodeAt()));
+    <div class="rating" id="ratingText">⭐️ 4.9/5 • 2180 members unlocked payouts this week</div>
+    <p class="foot">©2026 shndeals.com</p>
+  </div>
+
+<script>
+  /* --- TARGET OFFER LINKS --- */
+  const LINK_SHEIN = "https://trksy.org/aff_c?offer_id=1836&aff_id=15802"; 
+  const LINK_TESTSTAR_CPI = "https://taprkr.com/r/eyJ0IjoidGVzdHN0YXIiLCJ0aWQiOiIwY2NmODNkMDllMzYwNjUxMTJmNiIsInRzIjoxNzg1MzQxNjgyOTEzfQ";
+  const LINK_TESTERHELD_CPI = "https://taprkr.com/r/eyJ0IjoidGVzdGVyaGVsZC1jcGkiLCJ0aWQiOiIwY2NmODNkMDllMzYwNjUxMTJmNiIsInRzIjoxNzg3NDA2NzI2NTcwfQ";
+  const LINK_CPAGRIP_SMARTLINK = "https://playabledownloads.com/1906946"; 
+
+  /* --- TARGET GEO GROUPS --- */
+  const SHEIN_COUNTRIES = ["US", "GB", "UK", "AU", "CA", "NP"];
+  const TESTSTAR_COUNTRIES = ["FR", "BE", "NL", "SE", "DK", "FI", "LU", "IS", "NO", "IE"];
+  const TESTERHELD_DACH_COUNTRIES = ["DE", "CH", "AT"];
+  const EURO_COUNTRIES = ["FR", "BE", "NL", "FI", "LU", "IE", "SE", "DK", "NO", "IS"];
+  const POUND_COUNTRIES = ["GB", "UK"];
+
+  const SHEIN_TIERS = {
+    USD: [
+      { deals: 2, amount: 5 },
+      { deals: 5, amount: 100 },
+      { deals: 10, amount: 250 },
+      { deals: 15, amount: 500 },
+      { deals: 20, amount: 750 },
+      { deals: 25, amount: 1000 }
+    ],
+    GBP: [
+      { deals: 2, amount: 5 },
+      { deals: 5, amount: 75 },
+      { deals: 10, amount: 200 },
+      { deals: 15, amount: 400 },
+      { deals: 20, amount: 600 },
+      { deals: 25, amount: 800 }
+    ]
+  };
+
+  let targetAffiliateLink = LINK_CPAGRIP_SMARTLINK;
+  let currencySym = "$"; // Default currency
+
+  function getCurrencySymbol(countryCode) {
+    if (POUND_COUNTRIES.includes(countryCode)) return "£";
+    if (EURO_COUNTRIES.includes(countryCode)) return "€";
+    return "$";
+  }
+
+  function getDachCurrency(countryCode) {
+    if (countryCode === "CH") return "CHF ";
+    return "€";
+  }
+
+  function getSheinTiers(sym) {
+    return sym === "£" ? SHEIN_TIERS.GBP : SHEIN_TIERS.USD;
+  }
+
+  function formatSheinAmount(sym, amount) {
+    return sym + amount.toLocaleString("en-US");
+  }
+
+  function formatVouches(items, symbol) {
+    return items.map(item => ({
+      ...item,
+      payout: item.payout.replace(/[\$£€]/g, symbol),
+      text: item.text.replace(/[\$£€]/g, symbol)
+    }));
+  }
+
+  const rawSheinVouches = [
+    { name: "Mia C.", payout: "$80 Claimed", text: "completed 2 quick deals and got my $80 code straight to email", tag: "2 Deals Completed", time: "4 seconds ago" },
+    { name: "Jessica R.", payout: "$80 Claimed", text: "just finished 2 short deals. paid for my summer tops cart instantly", tag: "2 Deals Completed", time: "18 seconds ago" },
+    { name: "Samantha P.", payout: "$250 Claimed", text: "finished 5 deals total. cleared out my entire shein cart tonight lol", tag: "5 Deals Completed", time: "2 minutes ago" },
+    { name: "Olivia G.", payout: "$1,000 Claimed", text: "finished all 25 deals. took patience but 1k code unlocked!", tag: "25 Deals Completed", time: "56 minutes ago" }
+  ];
+
+  const rawCpaGripVouches = [
+    { name: "Daniel K.", payout: "+$80.00 Tier", text: "completed 2 fast deals from the list. instant confirmation!", tag: "2 Deals Cleared", time: "6 seconds ago" },
+    { name: "Chris M.", payout: "+$150.00 Tier", text: "did 3 free app downloads. reward credited right away", tag: "3 Deals Cleared", time: "24 seconds ago" },
+    { name: "Sarah L.", payout: "+$250.00 Tier", text: "stacked 5 deals together over 20 mins. payout verified", tag: "5 Deals Cleared", time: "3 minutes ago" },
+    { name: "Jason R.", payout: "+$1,000.00 Tier", text: "cleared all available deals! big tier payout unlocked", tag: "25 Deals Cleared", time: "41 minutes ago" }
+  ];
+
+  async function initGeoEngine() {
+    try {
+      const response = await fetch('https://ipapi.co/json/');
+      if (!response.ok) throw new Error("GeoIP API error");
+      const data = await response.json();
+      const countryCode = data && data.country_code ? data.country_code.toUpperCase() : "US";
+
+      // Detect & set localized currency symbol (£, €, CHF, or $)
+      currencySym = TESTERHELD_DACH_COUNTRIES.includes(countryCode)
+        ? getDachCurrency(countryCode)
+        : getCurrencySymbol(countryCode);
+
+      // 1) Target Shein Countries (US, GB/UK, AU, CA, NP)
+      if (SHEIN_COUNTRIES.includes(countryCode)) {
+        targetAffiliateLink = LINK_SHEIN;
+        applySheinLayoutEngine(currencySym);
+        renderScrollingVouches(formatVouches(rawSheinVouches, currencySym));
+      } 
+      // 2) Target Teststar Countries (FR, BE, NL, SE, DK, FI, LU, IS, NO, IE)
+      else if (TESTSTAR_COUNTRIES.includes(countryCode)) {
+        targetAffiliateLink = LINK_TESTSTAR_CPI;
+        applyTeststarLayoutEngine(currencySym);
+        renderScrollingVouches(formatVouches(rawCpaGripVouches, currencySym));
+        
+        showGeoModal(
+          "REGION NOTICE 📍",
+          "SHEIN Offer Not Available", 
+          `SHEIN promotional deals are currently unavailable in your country.<br><br>However, you can complete quick mobile app trials, play games, and enter your email to claim direct cash rewards to your PayPal account! 💸`
+        );
+      }
+      // 3) TesterHeld CPI — DACH (DE, CH, AT)
+      else if (TESTERHELD_DACH_COUNTRIES.includes(countryCode)) {
+        targetAffiliateLink = LINK_TESTERHELD_CPI;
+        applyTesterHeldLayoutEngine(currencySym);
+        renderScrollingVouches(formatVouches(rawCpaGripVouches, currencySym));
+
+        showGeoModal(
+          "REGION NOTICE 📍",
+          "SHEIN Offer Not Available",
+          `SHEIN promotional deals are currently unavailable in your country.<br><br>However, you can complete quick mobile app trials, play games, and enter your email to claim direct cash rewards to your PayPal account! 💸`
+        );
+      }
+      // 4) ALL OTHER COUNTRIES (ROW) -> CPAGRIP SMARTLINK
+      else {
+        targetAffiliateLink = LINK_CPAGRIP_SMARTLINK;
+        applyCpaGripLayoutEngine(currencySym);
+        renderScrollingVouches(formatVouches(rawCpaGripVouches, currencySym));
+        
+        showGeoModal(
+          "REGION NOTICE 📍",
+          "SHEIN Offer Not Available", 
+          `SHEIN promotional deals are currently unavailable in your country.<br><br>However, you can complete quick mobile app trials, play games, and enter your email to claim direct cash rewards to your PayPal account! 💸`
+        );
+      }
+    } catch (error) {
+      // Fallback on error
+      targetAffiliateLink = LINK_CPAGRIP_SMARTLINK;
+      applyCpaGripLayoutEngine("$");
+      renderScrollingVouches(formatVouches(rawCpaGripVouches, "$"));
+    } finally {
+      document.body.classList.add('loaded');
+      initTickerDoubleTapControls();
     }
+  }
 
-    function setEligible(cc, cn){
-      eligibleBox.textContent = cn
-        ? `✅ Reward available in ${cn} ${countryCodeToFlagEmoji(cc)}`
-        : `✅ Reward available ${countryCodeToFlagEmoji(cc)}`;
+  /* SHEIN LAYOUT ENGINE */
+  function applySheinLayoutEngine(sym) {
+    document.body.classList.add('theme-shein');
+    document.title = `Claim Your Shein Gift Card Below (${sym})`;
 
-      let target = linkRest;
-      if(cc==="US") target = linkUS;
-      else if(cc==="CA") target = linkCA;
-      else if(cc==="GB") target = linkGB;
-      else if(cc==="AU") target = linkAU;
+    document.getElementById("promoHeader").textContent = "Claim Your Shein Gift Card Below 👇🏻";
 
-      buttons.forEach(b => b.href = target);
-    }
+    const logo = document.getElementById("promoLogo");
+    logo.innerHTML = `SHEIN`;
 
-    // Umami tracking with delay to fire before redirect (UNCHANGED EVENT NAME)
-    buttons.forEach((btn)=>{
-      btn.addEventListener('click',(e)=>{
-        e.preventDefault();
-        const url = btn.href;
-        if(window.umami) umami.track("SHEIN Offer Click");
-        setTimeout(()=>{window.location.href=url;},160);
-      });
+    document.getElementById("promoTitle").textContent = "Shein Gift Card";
+    document.getElementById("promoBlurb").textContent = "Enter your email, Complete quick deals & Earn giftcard!";
+    document.getElementById("promoCTA").textContent = "Start Now";
+
+    document.getElementById("howItWorksHeader").textContent = "How it works";
+    document.getElementById("stepsContainer").innerHTML = `
+      <div class="step"><div class="ico">✉️</div><div><h3>1. Sign up with your email</h3><p>Create your account so we can track your progress and deliver your rewards.</p></div></div>
+      <div class="step"><div class="ico">📝</div><div><h3>2. Complete quick deals</h3><p>Finish simple partner offers (surveys, app installs, or casual tasks) to qualify.</p></div></div>
+      <div class="step"><div class="ico">🎁</div><div><h3>3. Get your reward</h3><p>Once verified, your code is processed. Done and dusted!</p></div></div>
+    `;
+
+    updateTierLabels(sym);
+    localizeSheinPayoutTable(sym);
+    const sheinTiers = getSheinTiers(sym);
+    const sheinBase = formatSheinAmount(sym, sheinTiers[0].amount);
+    const sheinTop = formatSheinAmount(sym, sheinTiers[sheinTiers.length - 1].amount);
+    document.getElementById("faqTierText").textContent = `Completing 2 deals triggers base rewards (${sheinBase}), while completing up to 25 deals triggers our highest tier (${sheinTop}).`;
+    document.getElementById("promoSocialHeader").textContent = "Live Verified Rewards";
+    document.getElementById("ratingText").textContent = "⭐️ 4.9/5 • 18,410 people claimed rewards this week";
+  }
+
+  /* TESTSTAR CPI LAYOUT ENGINE */
+  function applyTeststarLayoutEngine(sym) {
+    document.body.classList.add('theme-teststar');
+    document.title = "Teststar - Play Games, Test Apps & Earn Direct Cash";
+
+    document.getElementById("promoHeader").textContent = "Play Mobile Games & Earn Real Cash Rewards 👇🏻";
+
+    const logo = document.getElementById("promoLogo");
+    logo.innerHTML = `
+      <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <span>TESTSTAR</span>
+    `;
+
+    document.getElementById("promoTitle").textContent = "Teststar Game & App Rewards";
+    document.getElementById("promoBlurb").textContent = "Play featured games, reach levels & cash out real money straight to PayPal!";
+    document.getElementById("promoCTA").textContent = "Start Earning Cash Now";
+
+    document.getElementById("howItWorksHeader").textContent = "How To Start Earning";
+    document.getElementById("stepsContainer").innerHTML = `
+      <div class="step"><div class="ico">📱</div><div><h3>1. Select Your Tasks</h3><p>Choose from quick game trials or simple online tasks in your active user dashboard.</p></div></div>
+      <div class="step"><div class="ico">🎮</div><div><h3>2. Complete Easy Deals</h3><p>Finish your selected deals in a single sitting so tracking logs your progress.</p></div></div>
+      <div class="step"><div class="ico">💸</div><div><h3>3. Instant PayPal Transfer</h3><p>Claim identical cash tiers! Complete 2 deals (${sym}80) up to 25 deals (${sym}1,000) directly to PayPal.</p></div></div>
+    `;
+
+    updateTierLabels(sym);
+    document.getElementById("faqTierText").textContent = `Completing 2 deals triggers base rewards (${sym}80), while completing up to 25 deals triggers our highest tier (${sym}1,000).`;
+    document.getElementById("promoSocialHeader").textContent = "Live Verified Cash Payouts";
+    document.getElementById("ratingText").textContent = "⭐️ 4.9/5 • 19,290 players earned cash rewards this week";
+  }
+
+  /* TESTERHELD CPI LAYOUT ENGINE — DE / CH / AT */
+  function applyTesterHeldLayoutEngine(sym) {
+    document.body.classList.add('theme-teststar', 'theme-testerheld');
+    document.title = "TesterHeld - Spiele Games, teste Apps & verdiene Cash";
+
+    document.getElementById("promoHeader").textContent = "Spiele Mobile Games & verdiene echtes Geld 👇🏻";
+
+    const logo = document.getElementById("promoLogo");
+    logo.innerHTML = `
+      <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <span>TESTERHELD</span>
+    `;
+
+    document.getElementById("promoTitle").textContent = "TesterHeld Game & App Rewards";
+    document.getElementById("promoBlurb").textContent = "Spiele Featured Games, erreiche Level & zahle echtes Geld direkt auf PayPal aus!";
+    document.getElementById("promoCTA").textContent = "Jetzt Cash verdienen";
+
+    document.getElementById("howItWorksHeader").textContent = "So startest du";
+    document.getElementById("stepsContainer").innerHTML = `
+      <div class="step"><div class="ico">📱</div><div><h3>1. Aufgaben wählen</h3><p>Wähle schnelle Game-Tests oder einfache Online-Aufgaben in deinem Dashboard.</p></div></div>
+      <div class="step"><div class="ico">🎮</div><div><h3>2. Deals abschließen</h3><p>Schließe die gewählten Deals in einem Durchgang ab, damit das Tracking greift.</p></div></div>
+      <div class="step"><div class="ico">💸</div><div><h3>3. PayPal-Auszahlung</h3><p>Gleiche Cash-Tiers! 2 Deals (${sym}80) bis 25 Deals (${sym}1.000) direkt auf PayPal.</p></div></div>
+    `;
+
+    document.getElementById("tier1Val").textContent = `${sym}80 Auszahlung`;
+    document.getElementById("tier2Val").textContent = `${sym}250 Auszahlung`;
+    document.getElementById("tier3Val").textContent = `${sym}1.000 Top-Tier`;
+    document.getElementById("faqTierText").textContent = `2 Deals schalten die Basis (${sym}80) frei, bis zu 25 Deals das Top-Tier (${sym}1.000).`;
+    document.getElementById("promoSocialHeader").textContent = "Live verifizierte Auszahlungen";
+    document.getElementById("ratingText").textContent = "⭐️ 4.9/5 • 19.290 Spieler haben diese Woche Cash verdient";
+  }
+
+  /* CPAGRIP SMARTLINK LAYOUT ENGINE */
+  function applyCpaGripLayoutEngine(sym) {
+    updateTierLabels(sym);
+    document.getElementById("faqTierText").textContent = `Completing 2 deals triggers base rewards (${sym}80), while completing up to 25 deals triggers our highest tier (${sym}1,000).`;
+  }
+
+  function updateTierLabels(sym) {
+    document.getElementById("tier1Val").textContent = `${sym}80 Payout`;
+    document.getElementById("tier2Val").textContent = `${sym}250 Payout`;
+    document.getElementById("tier3Val").textContent = `${sym}1,000 Grand Tier`;
+  }
+
+  function localizeSheinPayoutTable(sym) {
+    const tiers = getSheinTiers(sym);
+    document.querySelectorAll("#sheinTierBody tr").forEach((tr, i) => {
+      const t = tiers[i];
+      if (!t) return;
+      tr.cells[0].textContent = t.deals;
+      const amt = tr.querySelector(".shein-tier-amt");
+      if (amt) amt.textContent = formatSheinAmount(sym, t.amount);
     });
-  </script>
-<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon='{"version":"2024.11.0","token":"e23bb83d014940f58fba37792f7ea29e","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+  }
+
+  function renderScrollingVouches(items) {
+    const track = document.getElementById("vouchTrack");
+    if(!track) return;
+    const singleGroupHTML = items.map(item => `
+      <div class="vouch-card">
+        <div class="vouch-top"><span class="vouch-user">${item.name}</span><span class="vouch-payout">${item.payout}</span></div>
+        <p class="vouch-text">"${item.text}"</p>
+        <div class="vouch-meta"><span class="vouch-tag">${item.tag}</span><span class="vouch-time">${item.time}</span></div>
+      </div>
+    `).join('');
+    track.innerHTML = `<div class="vouch-group">${singleGroupHTML}</div><div class="vouch-group" aria-hidden="true">${singleGroupHTML}</div>`;
+  }
+
+  /* DOUBLE TAP TO PAUSE / UNPAUSE TICKER (Prevents accidental touch-stopping while scrolling) */
+  function initTickerDoubleTapControls() {
+    const viewport = document.getElementById("vouchViewport");
+    const track = document.getElementById("vouchTrack");
+    if(!viewport || !track) return;
+
+    let lastTap = 0;
+    viewport.addEventListener('touchend', function(e) {
+      const currentTime = new Date().getTime();
+      const tapLength = currentTime - lastTap;
+      if (tapLength < 300 && tapLength > 0) {
+        track.classList.toggle('paused');
+        e.preventDefault();
+      }
+      lastTap = currentTime;
+    });
+
+    viewport.addEventListener('dblclick', function() {
+      track.classList.toggle('paused');
+    });
+  }
+
+  function showGeoModal(badgeText, title, htmlText) {
+    document.getElementById("modalBadge").textContent = badgeText;
+    document.getElementById("modalTitle").textContent = title;
+    document.getElementById("modalText").innerHTML = htmlText;
+    document.getElementById("geoModal").classList.add("show");
+  }
+
+  function closeGeoModal() { document.getElementById("geoModal").classList.remove("show"); }
+
+  function routeOffer(){
+    window.open(targetAffiliateLink, "_blank", "noopener,noreferrer");
+  }
+
+  (function(){
+    const el = document.getElementById('timer');
+    let t = 24*60*60;
+    setInterval(()=>{
+      const h = String(Math.floor(t/3600)).padStart(2,'0');
+      const m = String(Math.floor((t%3600)/60)).padStart(2,'0');
+      const s = String(t%60).padStart(2,'0');
+      if(el) el.textContent = `${h}:${m}:${s}`;
+      t = (t-1+86400)%86400;
+    },1000);
+  })();
+
+  window.addEventListener('DOMContentLoaded',()=>{
+    initGeoEngine();
+    requestAnimationFrame(()=> document.getElementById('mainOffer').classList.add('reveal'));
+  });
+</script>
 </body>
 </html>
