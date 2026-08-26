@@ -582,6 +582,9 @@
 <script>
   /* --- TARGET OFFER LINKS --- */
   const LINK_SHEIN = "https://trksy.org/aff_c?offer_id=1836&aff_id=15802"; 
+  const LINK_SHEIN_GB = "https://trksy.org/aff_c?offer_id=1225&aff_id=15802";
+  const LINK_SHEIN_CA = "https://giftclick.org/aff_c?offer_id=1226&aff_id=15802";
+  const LINK_SHEIN_AU = "https://giftclick.org/aff_c?offer_id=1227&aff_id=15802";
   const LINK_TESTSTAR_CPI = "https://taprkr.com/r/eyJ0IjoidGVzdHN0YXIiLCJ0aWQiOiIwY2NmODNkMDllMzYwNjUxMTJmNiIsInRzIjoxNzg1MzQxNjgyOTEzfQ";
   const LINK_TESTERHELD_CPI = "https://taprkr.com/r/eyJ0IjoidGVzdGVyaGVsZC1jcGkiLCJ0aWQiOiIwY2NmODNkMDllMzYwNjUxMTJmNiIsInRzIjoxNzg3NDA2NzI2NTcwfQ";
   const LINK_CPAGRIP_SMARTLINK = "https://playabledownloads.com/1906946"; 
@@ -670,7 +673,11 @@
 
       // 1) Target Shein Countries (US, GB/UK, AU, CA, NP)
       if (SHEIN_COUNTRIES.includes(countryCode)) {
-        targetAffiliateLink = LINK_SHEIN;
+        targetAffiliateLink = {
+          GB: LINK_SHEIN_GB,
+          CA: LINK_SHEIN_CA,
+          AU: LINK_SHEIN_AU
+        }[countryCode] || LINK_SHEIN;
         applySheinLayoutEngine(currencySym);
         renderScrollingVouches(formatVouches(rawSheinVouches, currencySym));
       } 
