@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
     <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-61W01PQPY8"></script>
 <script>
@@ -10,13 +12,15 @@
 
   gtag('config', 'G-61W01PQPY8');
 </script>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>SHEIN Gift Card</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<!-- Keep the same font without blocking the initial page display. -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'"/>
+<noscript><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet"/></noscript>
+<link rel="preconnect" href="https://i.postimg.cc"/>
+<link rel="preconnect" href="https://ipapi.co" crossorigin/>
 
 <style>
   :root{
@@ -217,7 +221,7 @@
 
     <div class="top-card">
       <div class="top">
-        <img class="avatar" src="https://i.postimg.cc/rppXNYm8/67829a8592805-66f2edc54b343-image1.png" alt=""/>
+        <img width="78" height="78" decoding="async" fetchpriority="high" class="avatar" src="https://i.postimg.cc/rppXNYm8/67829a8592805-66f2edc54b343-image1.png" alt=""/>
         <p class="kicker">if you’re wondering too…</p>
         <h1 class="headline">this is the SHEIN gift card 💖</h1>
         <p class="sub">Tap below to continue.</p>
@@ -225,8 +229,8 @@
     </div>
 
     <!-- SINGLE CTA ONLY -->
-    <a href="#" class="shein-btn cta-link" id="shein-btn" aria-label="SHEIN Gift Card">
-      <img class="btn-icon" src="https://i.postimg.cc/zBfxrrSy/c5910bd5-e5b2-4c70-b124-9560d8cbf698-link-in-bio-links-block-home-2af2051e-f17c-4f49-8af7-1eac99.webp" alt=""/>
+    <a href="https://giftclick.org/aff_c?offer_id=1224&amp;aff_id=15802" class="shein-btn cta-link" id="shein-btn" aria-label="SHEIN Gift Card">
+      <img width="44" height="44" decoding="async" class="btn-icon" src="https://i.postimg.cc/zBfxrrSy/c5910bd5-e5b2-4c70-b124-9560d8cbf698-link-in-bio-links-block-home-2af2051e-f17c-4f49-8af7-1eac99.webp" alt=""/>
       <div class="btn-text">
         <span class="btn-title">Reveal my reward</span>
         <span class="btn-sub">Continue →</span>
@@ -272,91 +276,163 @@
  <script defer src="https://cloud.umami.is/script.js" data-website-id="e31dbf23-205e-461a-bad9-7ba00af4da9d"></script>
 
   <script>
-    const eligibleBox = document.getElementById('eligible-box');
-    const buttons = document.querySelectorAll('.cta-link');
+    (() => {
+      'use strict';
 
-    // redirect links (UNCHANGED)
-const linkUS="https://giftclick.org/aff_c?offer_id=1224&aff_id=15802";  
-const linkCA="https://giftclick.org/aff_c?offer_id=1226&aff_id=15802";
-const linkGB="https://giftclick.org/aff_c?offer_id=1225&aff_id=15802"; 
-const linkAU="https://giftclick.org/aff_c?offer_id=1227&aff_id=15802";  
-    const linkRest="https://giftclick.org/aff_c?offer_id=1224&aff_id=15802";
+      const eligibleBox = document.getElementById('eligible-box');
+      const buttons = document.querySelectorAll('.cta-link');
 
-    // default instantly for ALL buttons
-    buttons.forEach(b => b.href = linkRest);
+      // Original destinations, offer IDs, and affiliate ID are unchanged.
+      const linkUS = 'https://giftclick.org/aff_c?offer_id=1224&aff_id=15802';
+      const linkCA = 'https://giftclick.org/aff_c?offer_id=1226&aff_id=15802';
+      const linkGB = 'https://giftclick.org/aff_c?offer_id=1225&aff_id=15802';
+      const linkAU = 'https://giftclick.org/aff_c?offer_id=1227&aff_id=15802';
+      const linkRest = 'https://giftclick.org/aff_c?offer_id=1224&aff_id=15802';
+      const destinations = { US: linkUS, CA: linkCA, GB: linkGB, AU: linkAU };
 
-    // ---- GEO FIX (high-traffic safe): timeout + cache-bust + 3 providers + final fallback ----
-    const withTimeout = (p, ms=1200) =>
-      Promise.race([p, new Promise((_,rej)=>setTimeout(()=>rej(new Error("timeout")), ms))]);
+      const GEO_TIMEOUT_MS = 2000;
+      const BACKUP_DELAY_MS = 350;
+      const TRACKING_TIMEOUT_MS = 160;
+      let geoResolved = false;
+      let navigating = false;
 
-    const tryProvider = async (url, mapFn) => {
-      const sep = url.includes("?") ? "&" : "?";
-      const r = await withTimeout(fetch(url + sep + "_=" + Date.now(), {
-        cache: "no-store",
-        credentials: "omit"
-      }), 1200);
-      if(!r.ok) throw new Error("bad_status_" + r.status);
-      const d = await r.json();
-      const out = mapFn(d);
-      if(!out || !out.cc) throw new Error("bad_payload");
-      return out;
-    };
+      buttons.forEach(button => { button.href = linkRest; });
 
-    (async()=>{
-      try{
-        // 1) ipapi
-        const {cc, cn} = await tryProvider("https://ipapi.co/json/", d => ({ cc: d.country, cn: d.country_name }));
-        setEligible(cc, cn);
-        return;
-      }catch(e){}
+      function normalizeCountry(value) {
+        const code = String(value || '').trim().toUpperCase();
+        return code === 'UK' ? 'GB' : code;
+      }
 
-      try{
-        // 2) ipwho
-        const {cc, cn} = await tryProvider("https://ipwho.is/", d => ({ cc: d.country_code, cn: d.country }));
-        setEligible(cc, cn);
-        return;
-      }catch(e){}
+      function countryCodeToFlagEmoji(code) {
+        if (!/^[A-Z]{2}$/.test(code)) return '';
+        return String.fromCodePoint(...[...code].map(char => 127397 + char.charCodeAt(0)));
+      }
 
-      try{
-        // 3) ipinfo (extra backup for high-traffic spikes)
-        const {cc, cn} = await tryProvider("https://ipinfo.io/json", d => ({ cc: d.country, cn: d.country }));
-        setEligible(cc, cn);
-        return;
-      }catch(e){}
+      function setEligible(country) {
+        const { cc, cn } = country;
+        eligibleBox.textContent = cn
+          ? `✅ Reward available in ${cn} ${countryCodeToFlagEmoji(cc)}`
+          : `✅ Reward available ${countryCodeToFlagEmoji(cc)}`;
+        const target = destinations[cc] || linkRest;
+        buttons.forEach(button => { button.href = target; });
+      }
 
-      // Final fallback: don't leave "Checking..."
-      eligibleBox.textContent = "✅ Reward available 🌍";
-    })();
-    // ----------------------------------------------------------------------------------------
+      function detectCountry() {
+        // One deadline covers all providers, including response-body downloads.
+        // Backups start only if the earlier request has not already succeeded.
+        return new Promise(resolve => {
+          const controller = new AbortController();
+          const timers = [];
+          let settled = false;
+          let failures = 0;
+          const providers = [
+            { url: 'https://ipapi.co/json/', map: data => ({ cc: data.country_code || data.country, cn: data.country_name }) },
+            { url: 'https://ipwho.is/', map: data => ({ cc: data.country_code, cn: data.country }) },
+            { url: 'https://ipinfo.io/json', map: data => ({ cc: data.country, cn: data.country }) }
+          ];
 
-    function countryCodeToFlagEmoji(cc){
-      if(!cc || cc.length!==2) return "";
-      return String.fromCodePoint(...[...cc.toUpperCase()].map(c=>127397+c.charCodeAt()));
-    }
+          function finish(country) {
+            if (settled) return;
+            settled = true;
+            timers.forEach(clearTimeout);
+            controller.abort();
+            resolve(country);
+          }
 
-    function setEligible(cc, cn){
-      eligibleBox.textContent = cn
-        ? `✅ Reward available in ${cn} ${countryCodeToFlagEmoji(cc)}`
-        : `✅ Reward available ${countryCodeToFlagEmoji(cc)}`;
+          timers.push(setTimeout(() => finish(null), GEO_TIMEOUT_MS));
 
-      let target = linkRest;
-      if(cc==="US") target = linkUS;
-      else if(cc==="CA") target = linkCA;
-      else if(cc==="GB") target = linkGB;
-      else if(cc==="AU") target = linkAU;
+          providers.forEach((provider, index) => {
+            async function run() {
+              if (settled) return;
+              try {
+                const response = await fetch(provider.url, {
+                  signal: controller.signal,
+                  cache: 'no-store',
+                  credentials: 'omit'
+                });
+                if (!response.ok) throw new Error('Geo request failed');
+                const data = await response.json();
+                if (!data || data.error || data.success === false) throw new Error('Geo lookup failed');
+                const mapped = provider.map(data);
+                const cc = normalizeCountry(mapped.cc);
+                if (!/^[A-Z]{2}$/.test(cc)) throw new Error('Invalid country code');
+                const cn = typeof mapped.cn === 'string' ? mapped.cn.trim() : '';
+                finish({ cc, cn });
+              } catch (_) {
+                failures += 1;
+                if (failures === providers.length) finish(null);
+              }
+            }
 
-      buttons.forEach(b => b.href = target);
-    }
+            if (index === 0) {
+              run();
+            } else {
+              timers.push(setTimeout(run, index * BACKUP_DELAY_MS));
+            }
+          });
+        });
+      }
 
-    // Umami tracking with delay to fire before redirect (UNCHANGED EVENT NAME)
-    buttons.forEach((btn)=>{
-      btn.addEventListener('click',(e)=>{
-        e.preventDefault();
-        const url = btn.href;
-        if(window.umami) umami.track("SHEIN Offer Click");
-        setTimeout(()=>{window.location.href=url;},160);
+      const geoReady = detectCountry()
+        .then(country => {
+          if (country) {
+            setEligible(country);
+          } else {
+            // Preserve the original fallback destination and wording.
+            eligibleBox.textContent = '✅ Reward available 🌍';
+          }
+        })
+        .catch(() => { eligibleBox.textContent = '✅ Reward available 🌍'; })
+        .finally(() => { geoResolved = true; });
+
+      function trackClick() {
+        // Tracking failure must never prevent navigation.
+        return new Promise(resolve => {
+          let timer;
+          const finish = () => {
+            clearTimeout(timer);
+            resolve();
+          };
+          try {
+            if (!window.umami || typeof window.umami.track !== 'function') {
+              finish();
+              return;
+            }
+            timer = setTimeout(finish, TRACKING_TIMEOUT_MS);
+            const result = window.umami.track('SHEIN Offer Click');
+            if (result && typeof result.then === 'function') {
+              Promise.resolve(result).then(finish, finish);
+            }
+          } catch (_) {
+            finish();
+          }
+        });
+      }
+
+      buttons.forEach(button => {
+        button.addEventListener('click', async event => {
+          // Once the destination is ready, preserve normal new-tab shortcuts.
+          if (geoResolved && (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey)) {
+            void trackClick();
+            return;
+          }
+
+          event.preventDefault();
+          if (navigating) return;
+          navigating = true;
+          button.setAttribute('aria-busy', 'true');
+          try {
+            // Tracking and geo lookup overlap instead of adding their delays.
+            // Read the destination after geo settles, never before it.
+            await Promise.all([geoReady, trackClick()]);
+            window.location.href = button.href;
+          } finally {
+            navigating = false;
+            button.removeAttribute('aria-busy');
+          }
+        });
       });
-    });
+    })();
   </script>
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon='{"version":"2024.11.0","token":"e23bb83d014940f58fba37792f7ea29e","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>
